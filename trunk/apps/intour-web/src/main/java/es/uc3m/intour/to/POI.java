@@ -11,7 +11,8 @@ import javax.xml.bind.annotation.XmlType;
     "id",
     "uri",
     "name",
-    "description"
+    "description",
+    "type"
 })
 public class POI {
 
@@ -19,6 +20,8 @@ public class POI {
 	private String uri= "";
 	private String name= "";
 	private String description= "";
+	private String type = "";
+	
 	public POI(){
 		
 	}

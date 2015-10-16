@@ -1,0 +1,12 @@
+SELECT DISTINCT *  WHERE {
+ ?poi a dbo:PopulatedPlace.
+ ?poi rdfs:label ?label.
+ FILTER(lang(?label)="en").
+ ?poi rdfs:comment ?comment.
+ FILTER(lang(?comment)="en").
+ OPTIONAL{
+  ?poi geo:lat ?lat.
+  ?poi geo:long ?long.
+ }
+}
+LIMIT 10

@@ -58,27 +58,19 @@
 
 		<!--Jena -->
 		<dependency>
-			<groupId>com.hp.hpl.jena</groupId>
-			<artifactId>jena</artifactId>
-			<version>2.6.4</version>
-		</dependency>
-		<dependency>
-			<groupId>com.hp.hpl.jena</groupId>
-			<artifactId>arq</artifactId>
-			<version>2.8.7</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.opencsv</groupId>
-			<artifactId>opencsv</artifactId>
-			<version>2.0</version>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.12</version>
 		</dependency>
 
-		<!-- Apache POI -->
+
 		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi</artifactId>
-			<version>3.5-beta5</version>
+			<groupId>org.apache.jena</groupId>
+			<artifactId>apache-jena-libs</artifactId>
+			<type>pom</type>
+			<version>2.13.0</version>
 		</dependency>
+
 
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -87,35 +79,28 @@
 		</dependency>
 
 
-		<dependency>
-			<groupId>net.sf.opencsv</groupId>
-			<artifactId>opencsv</artifactId>
-			<version>2.0</version>
-		</dependency>
-
 
 		<!--Lucene -->
 
-		<!--
-		<dependency>
-			<groupId>org.apache.solr</groupId>
-			<artifactId>solr-core</artifactId>
-			<version>1.4.1</version>
-		</dependency>
-
-
-		<dependency>
-			<groupId>org.apache.lucene</groupId>
-			<artifactId>lucene-core</artifactId>
-			<version>2.9.0</version>
-		</dependency>
--->
-</dependencies>
+		<!-- <dependency> <groupId>org.apache.solr</groupId> <artifactId>solr-core</artifactId> 
+			<version>1.4.1</version> </dependency> <dependency> <groupId>org.apache.lucene</groupId> 
+			<artifactId>lucene-core</artifactId> <version>2.9.0</version> </dependency> -->
+	</dependencies>
 
 
 
 	<!--Repositorios -->
 	<repositories>
+		<repository>
+			<id>central</id>
+			<url>https://repo1.maven.org/maven2</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+
+	
+
 		<repository>
 			<id>java.net</id>
 			<name>java.net Maven Repository</name>
@@ -132,11 +117,19 @@
 			<name>Sonatype Release Repo</name>
 			<url>http://oss.sonatype.org/content/repositories/sourceforge-releases/</url>
 		</repository>
+
+
 		<repository>
-			<id>com.hp.hpl.jena</id>
-			<name>JENA Maven Repo</name>
-			<url>http://openjena.org/repo/</url>
+			<id>apache-repo-snapshots</id>
+			<url>https://repository.apache.org/content/repositories/snapshots/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
 		</repository>
+
 	</repositories>
 	<pluginRepositories>
 
@@ -195,26 +188,26 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
+					<source>1.7</source>
+					<target>1.7</target>
 					<encoding>utf-8</encoding>
 					<showDeprecation>false</showDeprecation>
 				</configuration>
 			</plugin>
 
 			<plugin>
-			      <artifactId>maven-assembly-plugin</artifactId>
-			      <configuration>
-				<archive>
-				  <manifest>
-				    <mainClass>main.MainCPV2008Mapper</mainClass>
-				  </manifest>
-				</archive>
-				<descriptorRefs>
-				  <descriptorRef>jar-with-dependencies</descriptorRef>
-				</descriptorRefs>
-			      </configuration>
-			    </plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>main.MainCPV2008Mapper</mainClass>
+						</manifest>
+					</archive>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+			</plugin>
 
 			<!-- WEB -->
 			<plugin>

@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 
 import es.uc3m.intour.business.SearchBusiness;
 import es.uc3m.intour.business.SearchBusinessImpl;
+import es.uc3m.intour.to.Context;
 import es.uc3m.intour.to.ListPOI;
 import es.uc3m.intour.to.POI;
 
@@ -27,7 +28,9 @@ public class SearchService {
 	@ProduceMime({"text/plain", "application/xml", "application/json"})
 	public ListPOI search(@QueryParam("name") String name){	 
 		try{
-			List<POI> results = this.searcher.search(name);
+			Context context = new Context();
+			context.setQuery(name);
+			List<POI> results = this.searcher.search(context);
 			ListPOI pois = new ListPOI(results);
 			return pois;
 		}catch(Exception e){

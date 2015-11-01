@@ -4,6 +4,7 @@ import java.util.List;
 
 import es.uc3m.intour.dao.POIDAO;
 import es.uc3m.intour.dao.SPARQLPOIDAO;
+import es.uc3m.intour.to.Context;
 import es.uc3m.intour.to.POI;
 
 public class SearchAppServ {
@@ -12,7 +13,7 @@ public class SearchAppServ {
 	public SearchAppServ(){
 		this.poiDAO = new SPARQLPOIDAO();
 	}
-	public List<POI> search(String name){
-		return this.poiDAO.search(name);
+	public List<POI> search(Context context){
+		return this.poiDAO.search(context);
 	}
 }

@@ -1,0 +1,1 @@
+web:  java $JAVA_OPTS -cp trunk/intour-web/target/classes:trunk/intour-web/target/dependency/* intour-web

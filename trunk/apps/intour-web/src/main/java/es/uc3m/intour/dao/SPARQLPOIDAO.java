@@ -10,8 +10,10 @@ public class SPARQLPOIDAO implements POIDAO {
 	/* (non-Javadoc)
 	 * @see es.uc3m.intour.dao.POIDAO#search(java.lang.String)
 	 */
+	public static final String POI_QUERY="poi.query"; //See SPARQLQueriesLoader.properties
 	public List<POI> search(String name) {
 		//Create query
+		String query = SPARQLQueriesLoader.getSPARQLQuery(POI_QUERY);
 		//Execute query
 		//Process results to create POIs
 		POI poi = new POI();

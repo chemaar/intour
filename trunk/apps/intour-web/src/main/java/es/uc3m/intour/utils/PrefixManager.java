@@ -5,9 +5,18 @@ import java.util.ResourceBundle;
 
 public class PrefixManager {
 	static ResourceBundle prefixes = null; 
+	public static String NS = "";
 
 	static{
 		prefixes = ResourceBundle.getBundle(PrefixManager.class.getName().toString());
+		StringBuffer ns = new StringBuffer();
+		Enumeration<String> keys = prefixes.getKeys();
+		while(keys.hasMoreElements()){
+			String prefix = keys.nextElement();
+			String uri = prefixes.getString(prefix);
+			ns.append("PREFIX "+prefix+": <"+uri+"> \n");
+		}
+		NS = ns.toString();
 	}
 
 	public static String getURIPrefix(String prefix){
@@ -24,6 +33,8 @@ public class PrefixManager {
 				found = Boolean.TRUE; 
 			}
 		}
+		
+		
 		return uriValue;
 	}
 	public static ResourceBundle getResourceBundle(){

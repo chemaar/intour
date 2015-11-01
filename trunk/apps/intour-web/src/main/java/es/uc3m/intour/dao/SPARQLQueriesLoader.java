@@ -34,8 +34,8 @@ public class SPARQLQueriesLoader {
 		return  sparqlQueries.get(key);
 	}
 
-	public static void main(String []args){
-		System.out.println("Query:"+SPARQLQueriesLoader.getSPARQLQuery("poi.query"));
+	public static HashMap<String, String>  getSPARQLQueries(){
+		return  sparqlQueries;
 	}
 
 	static String readFile(String path, Charset encoding) {
@@ -46,7 +46,7 @@ public class SPARQLQueriesLoader {
 	                        .toURI()));
 			return new String(encoded, encoding);
 		}catch(Exception e){
-			System.out.println(e);
+			
 		}
 		return "";
 	}

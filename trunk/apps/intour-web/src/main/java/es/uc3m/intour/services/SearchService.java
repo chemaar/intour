@@ -10,6 +10,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
+import org.apache.log4j.Logger;
+
 import es.uc3m.intour.business.SearchBusiness;
 import es.uc3m.intour.business.SearchBusinessImpl;
 import es.uc3m.intour.to.Context;
@@ -19,6 +21,8 @@ import es.uc3m.intour.to.POI;
 @Path("/search")
 public class SearchService {
 
+	protected static Logger logger = Logger.getLogger(SearchService.class);
+	
 	SearchBusiness searcher = new SearchBusinessImpl();
 	public SearchService() throws IOException{
 	}
@@ -28,6 +32,7 @@ public class SearchService {
 	@ProduceMime({"text/plain", "application/xml", "application/json"})
 	public ListPOI search(@QueryParam("name") String name){	 
 		try{
+			logger.info("Searching by name: "+name);
 			Context context = new Context();
 			context.setQuery(name);
 			List<POI> results = this.searcher.search(context);

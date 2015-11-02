@@ -14,6 +14,8 @@ public class SearchAppServ {
 		this.poiDAO = new SPARQLPOIDAO();
 	}
 	public List<POI> search(Context context){
+		//Mezclar resultados
+		//Generar ruta...
 		return this.poiDAO.search(context);
 	}
 }

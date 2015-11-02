@@ -30,11 +30,11 @@ public class SPARQLQueriesLoader {
 	}
 
 
-	public static String  getSPARQLQuery(String key){
+	public static String  getSPARQLQueryTemplate(String key){
 		return  sparqlQueries.get(key);
 	}
 
-	public static HashMap<String, String>  getSPARQLQueries(){
+	public static HashMap<String, String>  getSPARQLQueryTemplates(){
 		return  sparqlQueries;
 	}
 

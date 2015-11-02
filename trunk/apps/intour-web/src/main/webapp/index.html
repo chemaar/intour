@@ -19,6 +19,7 @@
   <script type="text/javascript">
 
    var map;
+   var server = "http://intour-web.herokuapp.com";
 
     function loadResults (data) {
       var items, markers_data = [];
@@ -27,7 +28,7 @@
         for (var i = 0; i < items.length; i++) {
           var item = items[i];
           if (item.lat != undefined && item.lon != undefined) {
-            var icon = 'http://localhost:9000/intour-web/img/poi.png';//FIXME per type
+            var icon = server+'/img/poi.png';//FIXME per type
             var infoContent = "<ul><li>Name:"+item.name+"</li><li>Description:"+ item.description+"</li><li>Lat:"+item.lat+"</li><li>Long:"+item.lon+"</li></ul>";
 		    markers_data.push({
               lat : item.lat,
@@ -90,7 +91,7 @@
       prettyPrint();
       initMap();
 
-      var xhr = $.getJSON('http://localhost:9000/intour-web/services/search');
+      var xhr = $.getJSON(server+'/services/search');
 
       xhr.done(printResults);
       xhr.done(loadResults);
@@ -104,7 +105,7 @@
          var name= $('#name').val();
          if (name!= null && name != '') {
             initMap();//FIXME: Check
-         	var xhr = $.getJSON('http://localhost:9000/intour-web/services/search?name='+name);
+         	var xhr = $.getJSON(server+'/services/search?name='+name);
          	xhr.done(printResults);
          	xhr.done(loadResults);
          }

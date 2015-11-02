@@ -34,6 +34,12 @@ public class SPARQLQueriesHelper {
 		return processResults(resultsSet);
 	}
 	
+	public static QuerySolution[] executeSimpleSparql(String endpoint, Query query) {
+		LinkedList results = new LinkedList();
+		QueryEngineHTTP httpQuery = new QueryEngineHTTP(endpoint,query);
+		ResultSet resultsSet = httpQuery.execSelect();   
+		return processResults(resultsSet);
+	}
 	
 	/**
 	 * Against a local model

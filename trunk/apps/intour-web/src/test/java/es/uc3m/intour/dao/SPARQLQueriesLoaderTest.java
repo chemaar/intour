@@ -9,7 +9,7 @@ public class SPARQLQueriesLoaderTest {
 
 	@Test
 	public void test() {
-		Assert.assertEquals(1, SPARQLQueriesLoader.getSPARQLQueries().size());
+		Assert.assertEquals(1, SPARQLQueriesLoader.getSPARQLQueryTemplates().size());
 		
 	}
 

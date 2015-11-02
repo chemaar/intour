@@ -1,9 +1,9 @@
 SELECT DISTINCT *  WHERE {
  ?poi a dbo:PopulatedPlace.
  ?poi rdfs:label ?label.
- FILTER(lang(?label)="en").
+ FILTER(lang(?label)=?lang).
  ?poi rdfs:comment ?comment.
- FILTER(lang(?comment)="en").
+ FILTER(lang(?comment)=?lang).
  OPTIONAL{
   ?poi geo:lat ?lat.
   ?poi geo:long ?long.

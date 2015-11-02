@@ -189,7 +189,7 @@
 				<configuration>
 					<appName>intour-web</appName>
 					<processTypes>
-						<web>java $JAVA_OPTS -cp trunk/intour-web/target/classes:trunk/intour-web/target/dependency/* intour-web</web>
+						<web>java $JAVA_OPTS -cp trunk/apps/intour-web/target/classes:trunk/apps/intour-web/target/dependency/* intour-web</web>
 					</processTypes>
 				</configuration>
 			</plugin>

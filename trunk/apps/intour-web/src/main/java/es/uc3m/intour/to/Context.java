@@ -2,7 +2,7 @@ package es.uc3m.intour.to;
 
 public class Context {
 
-	private String lang = "EN";
+	private String lang = "en";
 	private String query = "";
 	public String getLang() {
 		return lang;

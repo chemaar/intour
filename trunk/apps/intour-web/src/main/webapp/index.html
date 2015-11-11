@@ -19,12 +19,13 @@
   <script type="text/javascript">
 
    var map;
-   var server = "http://intour-web.herokuapp.com";
+   var server = "http://localhost:9000/intour-web";
 
     function loadResults (data) {
       var items, markers_data = [];
-      if (data.suggestions.suggestion.length > 0) {
-        items = data.suggestions.suggestion;
+   
+      if (data.suggestion.length > 0) {
+        items = data.suggestion;
         for (var i = 0; i < items.length; i++) {
           var item = items[i];
           if (item.lat != undefined && item.lon != undefined) {

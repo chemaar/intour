@@ -15,37 +15,33 @@ import org.apache.log4j.Logger;
 import es.uc3m.intour.business.SearchBusiness;
 import es.uc3m.intour.business.SearchBusinessImpl;
 import es.uc3m.intour.to.Context;
-import es.uc3m.intour.to.ListPerson;
-import es.uc3m.intour.to.Person;
+import es.uc3m.intour.to.ListPOI;
+import es.uc3m.intour.to.POI;
 
+@Path("/search")
+public class SearchServicePlace {
 
-@Path("/person")
-public class SearchService {
-
-	protected static Logger logger = Logger.getLogger(SearchService.class);
+	protected static Logger logger = Logger.getLogger(SearchServicePlace.class);
 	
 	SearchBusiness searcher = new SearchBusinessImpl();
-	public SearchService() throws IOException{
+	public SearchServicePlace() throws IOException{
 		
 	}
 
 	@GET
 	@Produces({"text/plain", "application/xml", "application/json"})
-	public ListPerson searchPerson(@QueryParam("name") String name){	 
+	public ListPOI search(@QueryParam("namePlace") String name,@QueryParam("input") String input){	 
 		try{
-			logger.info("Searching by name:  "+name);
+			
+			logger.info("Searching by namePlace:  "+name);
+			System.out.println("El valor de input es: "+input);
 			Context context = new Context();
 			context.setQuery(name);
 			context.setName(name);
-			List<Person> results = this.searcher.searchPerson(context);
-			/*Comprobamos si los datos se reciben bien*/
-			if(results.isEmpty()){
-				System.out.println("Persona no encontrada");
-			}else{
-				System.out.println("Persona encontrada");
-			}
-			ListPerson people = new ListPerson(results);
-			return people;
+			context.setInput(input);
+			List<POI> results = this.searcher.search(context);
+			ListPOI pois = new ListPOI(results);
+			return pois;
 		}catch(Exception e){
 			 throw new WebApplicationException(Response.Status.BAD_REQUEST);
 		}

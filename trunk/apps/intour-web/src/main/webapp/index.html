@@ -102,15 +102,105 @@
       $('#name').val="";
   }
   
-  function search() {
-         var name= $('#name').val();
-         if (name!= null && name != '') {
+  
+  
+  function search(input) {
+    		
+    	var name;
+    	
+  		switch(input){
+  		
+  			case 0: name= $('#nombre').val(); break;
+  			case 1: name= $('#birthPlace').val(); break;
+  			case 2: name= $('#birthDate').val(); break;
+  			case 3: name= $('#description').val(); break;
+  			case 4: name= $('#nationality').val(); break;
+  			case 5: name= $('#field').val(); break;
+  			case 6: name= $('#museum').val(); break;
+  		}
+  
+         if (name!= null && name != "Novalue") {
             initMap();//FIXME: Check
-         	var xhr = $.getJSON(server+'/services/search?name='+name);
+         	var xhr = $.getJSON(server+'/services/search?namePlace='+name+'&input='+input);
          	xhr.done(printResults);
          	xhr.done(loadResults);
          }
-    }
+  }
+  
+  function clearInputs(){
+     
+     var valores = document.getElementsByClassName("valores");
+     for(var i=0; i<valores.length; i++){
+        valores[i].value="Novalue";
+        valores[i].style.visibility="hidden";
+     
+     }
+  }
+  
+  function mostrarInputs(){
+     var valores = document.getElementsByClassName("valores");
+      for(var i=0; i<valores.length; i++){
+      
+        if(valores[i].value!="Novalue"){
+           valores[i].style.visibility="visible";
+        }
+     
+     }
+     
+  }
+  
+  function loadResultsPerson (data) {
+      var items;
+   	  var valores = document.getElementsByClassName("valores");
+    
+      if (data.suggestion.length > 0) {
+        items = data.suggestion;
+        for (var i = 0; i < items.length; i++) {
+          var item = items[i];
+          var infoContent = "<ul><li>Name:"+item.name+"</li><li>birthPlace:"+ item.birthPlace+"</li><li>birthDate:"+item.birthDate+"</li><li>Description:"+item.description+"</li><li>Nationality:"+item.nationality+"</li><li>Field:"+item.field+"</li><li>Museum:"+item.museum+"</li></ul>";
+		  $('#resultsPerson').append(infoContent);
+		  
+		  clearInputs();
+		  if(item.name!=""){
+		  	valores[0].value=item.name;
+		  }
+		  if(item.birthPlace!=""){
+		  	valores[1].value=item.birthPlace;
+		  }
+		  if(item.birthDate!=""){
+		  	valores[2].value=item.birthDate;
+		  }
+		  if(item.description!=""){
+		  	valores[3].value=item.description;
+		  }
+		  if(item.nationality!=""){
+		  	valores[4].value=item.nationality;
+		  }
+		  if(item.field!=""){
+		  	valores[5].value=item.field;
+		  }
+		  if(item.museum!=""){
+		  	valores[6].value=item.museum;
+		  }
+		  mostrarInputs();
+        }
+      }
+      
+      
+   }
+  
+  
+  function searchPerson(){
+  		
+  		var name= $('#name').val();
+         if (name!= null && name != '') {
+         	var xhr = $.getJSON(server+'/services/person?name='+name);
+         	xhr.done(loadResultsPerson);
+         }
+  }
+  
+  
+  
   </script>
   
   
@@ -189,6 +279,10 @@
         border-right: 0;
         border-radius: 0 3px 3px 0;
       }
+      
+      .valores,#noResults{
+      	visibility: hidden;
+      }
     </style>
     <link href="./bootstrap/bootstrap-responsive.css" rel="stylesheet">
 
@@ -230,15 +324,55 @@
       <!-- Jumbotron -->
       <div class="jumbotron">
         <h2>Intelligent Tourism!</h2>
-        <p class="lead">Search for a place...</p>
+        <p class="lead">Search for...</p>
         <form role="form-horizontal" role="form" id="validationForm">
 		  <div class="form-group">
 		   <div class="input-group">
-    		  <input type="text" class="form-control" placeholder="Search for..." id="name">
+		   
+    		  <input type="text" class="form-control" placeholder="Search for Person" id="name">
      		  <span class="input-group-btn">
-        		<button onclick="search();" class="btn btn-default" type="button">Go!</button>
-      		</span>
-    		</div><!-- /input-group -->
+        		<button onclick="searchPerson();" class="btn btn-default" type="button">Go!</button>
+      		  </span>
+      		  
+      		  <p id="noResults">There isn´t any result</p>
+      		</div><!-- /input-group -->
+      		<br>
+      		
+      		 <div class="input-group">
+      		   <input type="button" onclick="search(0);" class="valores" value="Novalue" id="nombre">
+    		 </div>
+    		 <br>
+    		 
+    		 <div class="input-group">
+      		   <input type="button" onclick="search(1);" class="valores" value="Novalue" id="birthPlace">
+    		 </div>
+    		 <br>
+    		 
+    		 <div class="input-group">
+      		   <input type="button" onclick="search(2);" class="valores" value="Novalue" id="birthDate">
+    		 </div>
+    		 <br>
+    		 
+    		 <div class="input-group">
+      		   <input type="button" onclick="search(3);" class="valores" value="Novalue" id="description">
+    		 </div>
+    		 <br>
+    		 
+    		 <div class="input-group">
+      		   <input type="button" onclick="search(4);" class="valores" value="Novalue" id="nationality">
+    		 </div>
+    		 <br>
+    		 
+    		 <div class="input-group">
+      		   <input type="button" onclick="search(5);" class="valores" value="Novalue" id="field">
+    		 </div>
+    		 <br>
+    		 
+    		 <div class="input-group">
+      		   <input type="button" onclick="search(6);" class="valores" value="Novalue" id="museum">
+    		 </div>
+    		 <br>
+    		
 		  </div>
 		</form>
       </div>
@@ -264,6 +398,14 @@
     	
 
       <hr>
+      
+      <div class="container">
+    		<h3>Results of people..</h3>
+     		<div id="resultsPerson"></div>
+		</div>
+    	
+    	  <hr>
+      
 
       <div class="footer">
         <p>&copy; UC3M 2015</p>

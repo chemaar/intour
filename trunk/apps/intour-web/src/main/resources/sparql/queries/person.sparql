@@ -1,0 +1,29 @@
+SELECT ?label ?birthPlace ?birthDate ?description ?nationality  ?field ?museum WHERE{
+
+     ?person dbo:birthDate ?birthDate .
+     ?person dc:description ?description .
+
+ optional{
+      ?person dbo:birthPlace ?birthAux .
+      ?birthAux rdfs:label ?birthPlace.
+ }
+ optional{
+      ?person dbo:field ?fieldAux .
+      ?fieldAux rdfs:label ?field.
+      FILTER(lang(?field)=?lang).
+  }
+  optional{
+      ?person dbpedia2:nationality ?nationalityAux .
+      ?nationalityAux  rdfs:label ?nationality.
+      FILTER(lang(?nationality)=?lang).     
+  }
+  optional{
+       ?museumAux dbo:type <http://dbpedia.org/resource/Museum>.
+       ?museumAux ?p  ?person.
+       ?museumAux rdfs:label ?museum.
+       FILTER(lang(?museum)=?lang).
+  }
+  ?person rdfs:label ?label .
+  FILTER regex(?label,?name) .
+}
+LIMIT 1

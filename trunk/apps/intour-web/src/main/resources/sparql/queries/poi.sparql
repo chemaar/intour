@@ -8,5 +8,6 @@ SELECT DISTINCT *  WHERE {
   ?poi geo:lat ?lat.
   ?poi geo:long ?long.
  }
+ FILTER regex(?label,?name) .
 }
 LIMIT 10

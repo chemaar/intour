@@ -6,6 +6,7 @@ import es.uc3m.intour.dao.POIDAO;
 import es.uc3m.intour.dao.SPARQLPOIDAO;
 import es.uc3m.intour.to.Context;
 import es.uc3m.intour.to.POI;
+import es.uc3m.intour.to.Person;
 
 public class SearchAppServ {
 
@@ -17,5 +18,11 @@ public class SearchAppServ {
 		//Mezclar resultados
 		//Generar ruta...
 		return this.poiDAO.search(context);
+	}
+	
+	public List<Person> searchPerson(Context context){
+		//Mezclar resultados
+		//Generar ruta...
+		return this.poiDAO.searchPerson(context);
 	}
 }

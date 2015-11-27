@@ -1,0 +1,10 @@
+SELECT ?lat ?long WHERE {
+
+    ?place a dbo:Place .
+    ?person dbo:birthPlace ?place.
+    ?person dbo:birthDate ?birth .
+    ?place geo:lat ?lat .
+    ?place geo:long ?long .
+    FILTER (?birth > ?name^^xsd:date).
+}
+LIMIT 1

@@ -1,0 +1,10 @@
+SELECT ?lat ?long WHERE {
+
+    ?place a dbo:Place .
+    ?person dc:description ?description .
+    ?person ?p  ?place.
+    ?place geo:lat ?lat .
+    ?place geo:long ?long .
+    FILTER regex(?description ,?name) .
+}
+LIMIT 1

@@ -14,6 +14,7 @@ import com.hp.hpl.jena.rdf.model.Literal;
 
 import es.uc3m.intour.to.Context;
 import es.uc3m.intour.to.POI;
+import es.uc3m.intour.to.Person;
 import es.uc3m.intour.utils.PrefixManager;
 import es.uc3m.intour.utils.SPARQLQueriesHelper;
 
@@ -23,34 +24,105 @@ public class SPARQLPOIDAO implements POIDAO {
 	private String endpoint = "http://dbpedia.org/sparql"; //FIXME: Endpoint in the context?
 	
 	public static final String POI_QUERY="poi.query"; //See SPARQLQueriesLoader.properties
+	public static final String PERSON_QUERY="person.query";
+	public static String consulta; 
 	
+
+	public List<Person> searchPerson(Context context) {
+		
+		List<Person> people = new LinkedList<Person>();
+		
+		//Create params
+		Map<String,String> params = new HashMap<String,String>();
+		params.put("lang", context.getLang());
+		params.put("name", context.getName());
+		//Create query
+		Query query = createQuery(PERSON_QUERY,params);
+		//Execute query
+		QuerySolution[] results = SPARQLQueriesHelper.executeSimpleSparql(endpoint, query);
+		
+		//Process results to create POIs
+				String name;
+				String birthPlace;
+				String birthDate;
+				String description;
+				String nationality;
+				String field;
+				String museum;
+				Person person = new Person();
+				
+				for(int i = 0; i<results.length;i++){
+					//FIXME: Processing: literal, literal with lang and resource
+					name = extractStringValue(results[i],"label");
+					birthPlace = extractStringValue(results[i],"birthPlace");
+					birthDate = extractStringValue(results[i],"birthDate");
+					description = extractStringValue(results[i],"description");
+					nationality = extractStringValue(results[i],"nationality");
+					field = extractStringValue(results[i],"field");
+					museum = extractStringValue(results[i],"museum");
+					
+					person.setName(name);
+					person.setBirthPlace(birthPlace);
+					person.setBirthDate(birthDate);
+					person.setDescription(description);
+					person.setNationality(nationality);
+					person.setField(field);
+					person.setMuseum(museum);
+					/*System.out.println("Nombre: "+person.getName()+"birthPlace: "+person.getBirthPlace()+
+							"Description: "+person.getDescription());*/
+					people.add(person);
+				}
+		
+		return people;
+	
+	}
 	public List<POI> search(Context context) {
+		
 		List<POI> pois = new LinkedList<POI>();
 		//Create params
 		Map<String,String> params = new HashMap<String,String>();
 		params.put("lang", context.getLang());
+		params.put("name", context.getName());
 		///params.put("place", context.getQuery());
 		//Create query
-		Query query = createQuery(POI_QUERY,params);
+		String input= context.getInput();
+		
+		if(input.equals("0")){
+			consulta="poiPerson.query";
+		}else if(input.equals("1")){
+			consulta="poi.query";
+		}else if(input.equals("2")){
+			consulta="poiBirthDate.query";
+		}else if(input.equals("3")){
+			consulta="poiDescription.query";
+		}else if(input.equals("4")){
+			consulta="poiNationality.query";
+		}else if(input.equals("5")){
+			consulta="poiField.query";
+		}else if(input.equals("6")){
+			consulta="poiMuseum.query";
+		}
+		
+		Query query = createQuery(consulta,params);
 		//Execute query
 		QuerySolution[] results = SPARQLQueriesHelper.executeSimpleSparql(endpoint, query);
 		//Process results to create POIs
-		String uriPOI;
+		//String uriPOI;
 		String label;
-		String comment;
+		//String comment;
 		String lat;
 		String lon;
 		for(int i = 0; i<results.length;i++){
 			//FIXME: Processing: literal, literal with lang and resource
 			label = extractStringValue(results[i],"label");
-			uriPOI = (results[i].getResource("poi")!=null?results[i].getResource("poi").getURI():"");
-			comment = extractStringValue(results[i],"description");
+			//uriPOI = (results[i].getResource("poi")!=null?results[i].getResource("poi").getURI():"");
+			//comment = extractStringValue(results[i],"description");
 			lat = extractStringValue(results[i],"lat");
 			lon = extractStringValue(results[i],"long");
 			POI poi = new POI();
-			poi.setUri(uriPOI);
+			//poi.setUri(uriPOI);
 			poi.setName(label);
-			poi.setDescription(comment);
+			//poi.setDescription(comment);
 			poi.setLat(lat);
 			poi.setLon(lon);
 			pois.add(poi);
@@ -84,4 +156,6 @@ public class SPARQLPOIDAO implements POIDAO {
 		}
 		return "";
 	}
+
+
 }

@@ -1,0 +1,11 @@
+SELECT ?lat ?long WHERE {
+
+    ?place a dbo:Place .
+    ?museum dbo:type <http://dbpedia.org/resource/Museum>.
+    ?museum ?p  ?place.
+    ?place geo:lat ?lat .
+    ?place geo:long ?long .
+    ?museum rdfs:label ?label .
+    FILTER regex(?label,?name) .
+}
+LIMIT 1

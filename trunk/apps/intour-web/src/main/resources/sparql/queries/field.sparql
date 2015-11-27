@@ -1,0 +1,12 @@
+SELECT ?lat ?long WHERE {
+
+    ?place a dbo:Place .
+    ?person dbo:field ?aux .
+    ?aux rdfs:label ?field.
+    ?person ?p  ?place.
+    ?place geo:lat ?lat .
+    ?place geo:long ?long .
+    FILTER(lang(?field)=?lang).
+    FILTER regex(?field,?name) .
+}
+LIMIT 1

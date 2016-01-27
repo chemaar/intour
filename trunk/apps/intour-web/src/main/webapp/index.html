@@ -20,9 +20,14 @@
 
    var map;
    var server = "http://localhost:9000/intour-web";
-
+   markers_data= [];
+   var latOrigen=0;
+   var lngOrigen=0;
+   var latPuntoCercano=0;
+   var lngPuntoCercano=0;	
+    
     function loadResults (data) {
-      var items, markers_data = [];
+      var items;
    
       if (data.suggestion.length > 0) {
         items = data.suggestion;
@@ -39,17 +44,104 @@
               uri: item.uri,
               infoWindow: {
         		content : infoContent
-		      },
-              icon : {
-                size : new google.maps.Size(32, 32),
-                url : icon
-              }
+		      }
             });
           }
         }
       }
-      map.addMarkers(markers_data);
+      	localizarOrigen();
+        map.addMarkers(markers_data);
+        $('#results').append("latOrigen:"+latOrigen);
+		$('#results').append("lngOrigen:"+lngOrigen);
+        calcularDistancia();
+		$('#results').append("Lat:"+latPuntoCercano+",Longitud:"+lngPuntoCercano);
     }
+
+	function localizarOrigen(){
+	
+		GMaps.geolocate({
+		  success: function(position) {
+		  	latOrigen=position.coords.latitude;
+		  	lngOrigen=position.coords.longitude;
+		  	var infoContent = "<ul><li>Name:Mi posicion actual</li><li>Lat:"+latOrigen+"</li><li>Long:"+lngOrigen+"</li></ul>";
+		    map.setCenter(position.coords.latitude, position.coords.longitude);
+		    map.addMarker({
+			  lat: position.coords.latitude,
+			  lng: position.coords.longitude,
+			  title: 'Mi posicion',
+			  infoWindow: {
+        		content : infoContent
+		      }
+			});
+		  },
+		  error: function(error) {
+		    alert('Geolocation failed: '+error.message);
+		  },
+		  not_supported: function() {
+		    alert("Your browser does not support geolocation");
+		  },
+		  always: function() {
+		    alert("Done!");
+		  }
+		});
+	
+	}
+	
+	function calcularDistancia(){
+		
+		var difLat;
+		var difLng;
+		var squareLat;
+		var squareLng;
+		var sumSquare;
+		var distancia;
+		var distMin=999999999999999;
+		
+		
+		for(var i=0; i<markers_data.length; i++){
+			
+			$('#results').append("markers_data[i].lat:"+markers_data[i].lat);
+			$('#results').append("markers_data[i].lng:"+markers_data[i].lng);
+			$('#results').append("latOrigen:"+latOrigen);
+			$('#results').append("lngOrigen:"+lngOrigen);
+			
+			if(latOrigen>=0){
+				difLat=markers_data[i].lat-latOrigen;
+			}else{
+				var aux=Math.abs(latOrigen);
+				$('#results').append("auxLat:"+aux);
+				difLat=markers_data[i].lat+aux;
+			}
+			$('#results').append("difLat:"+difLat);
+			
+			if(lngOrigen>=0){
+				difLng=markers_data[i].lng-lngOrigen;
+			}else{
+				var aux=Math.abs(lngOrigen);
+				$('#results').append("auxLng:"+aux);
+				difLng=markers_data[i].lng+aux;
+			}
+			$('#results').append("difLng:"+difLng);
+			
+			squareLat= difLat*difLat;
+			$('#results').append("squareLat:"+squareLat);
+			squareLng= difLng*difLng;
+			$('#results').append("squareLng:"+squareLng);
+			sumSquare=squareLat+squareLng;
+			$('#results').append("sumSquare:"+sumSquare);
+			distancia=Math.sqrt(sumSquare); 
+			$('#results').append("distancia:"+distancia);
+			
+			if(distancia<distMin){
+				distMin=distancia;
+				latPuntoCercano=markers_data[i].lat;
+				lngPuntoCercano=markers_data[i].lng;
+			}
+		
+		}
+		
+	
+	}
 
     function printResults(data) {
       $('#intour-results').text(JSON.stringify(data));
@@ -71,6 +163,68 @@
       map.setCenter(lat, lng);
     });
 
+function calcularRutaREST(){
+   var data = [];
+   data[0]='Ejemplo 1';
+   data[1]='Ejemplo 2';
+   //FIXME: Bucle para cargar los datos
+   
+   //Fin
+   var markers_request = JSON.stringify(data);
+   var serializedData='{"param1":"hello","param2":"world","markers":'+markers_request+'}';
+   var request = $.ajax({
+        url: server+'/services/route',
+        headers: {          
+                 Accept : "application/json; charset=utf-8",         
+                "Content-Type": "application/json; charset=utf-8"   
+  		},  
+        type: "post",
+        data: serializedData
+    });
+
+    // Callback handler that will be called on success
+    request.done(function (response, textStatus, jqXHR){
+        console.log(response);
+        
+       if (response.camino.length > 0) {
+        items = response.camino;
+	        for (var i = 0; i < items.length; i++) {
+	          var item = items[i];
+	          if (item.lat != undefined && item.lon != undefined) {
+	            var icon = server+'/img/poi.png';//FIXME per type
+	            var infoContent = "<ul><li>Name:"+item.name+"</li><li>Description:"+ item.description+"</li><li>Lat:"+item.lat+"</li><li>Long:"+item.lon+"</li></ul>";
+			    markers_data.push({
+	              lat : item.lat,
+	              lng : item.lon,
+	              title : item.name,
+	              description:item.description,
+	              uri: item.uri,
+	              infoWindow: {
+	        		content : infoContent
+			      }
+	            });
+	          }
+	        }
+        
+         map.addMarkers(markers_data);
+      }
+      
+      
+    });
+
+    // Callback handler that will be called on failure
+    request.fail(function (jqXHR, textStatus, errorThrown){
+        // Log the error to the console
+        console.error(
+            "The following error occurred: "+
+            textStatus, errorThrown
+        );
+    });
+
+}
+
+
+
  function initMap(){
   map = new GMaps({
         div: '#map',
@@ -89,6 +243,8 @@
  }
 
     $(document).ready(function(){
+    calcularRutaREST();
+    
       prettyPrint();
       initMap();
 

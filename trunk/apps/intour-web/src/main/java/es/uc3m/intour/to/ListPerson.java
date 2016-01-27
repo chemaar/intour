@@ -13,7 +13,6 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "suggestions", propOrder = {
     "suggestion"
 })
-
 public class ListPerson {
 	
 	

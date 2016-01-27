@@ -27,6 +27,10 @@ public class Person {
 	private String nationality="";
 	private String field="";
 	private String museum="";
+	
+	public Person(){
+		
+	}
 	public String getName() {
 		return name;
 	}

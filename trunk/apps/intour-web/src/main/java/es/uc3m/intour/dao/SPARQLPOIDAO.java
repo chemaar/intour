@@ -173,7 +173,9 @@ public class SPARQLPOIDAO implements POIDAO {
 	    int numPoints=latitudes.size()+1;
 	    
 	    while(ruta.size()!=numPoints){
-	    	ruta=calcularPuntoCercano(ruta,posicion,contextoRutas);
+	    	POI auxPoi = new POI();
+	    	auxPoi=calcularPuntoCercano(ruta,posicion,contextoRutas);
+	    	ruta.add(auxPoi);
 	    	posicion++;
 	    }
 		return ruta; 
@@ -209,35 +211,41 @@ public class SPARQLPOIDAO implements POIDAO {
 		return distancia;
 	}
 	
-	private List<POI> calcularPuntoCercano(List<POI> ruta,int posicion,ContextRoute contextoRutas){
+	private POI calcularPuntoCercano(List<POI> ruta,int posicion,ContextRoute contextoRutas){
 		
 		List<Double> latitudes = contextoRutas.getLatitudes();
 		List<Double> longitudes = contextoRutas.getLongitudes();
+		double auxLat=Double.parseDouble(ruta.get(posicion).getLat());
+		double auxLng=Double.parseDouble(ruta.get(posicion).getLon());
 		POI puntoCercano = new POI();
 		double distanciaMin=Double.MAX_VALUE;
 	    double distancia;
-	    int posAdd=posicion+1;
 	    
+		
 		for(int i=0; i<latitudes.size();i++){
 			
-			double auxLat=Double.parseDouble(ruta.get(posicion).getLat());
-			double auxLng=Double.parseDouble(ruta.get(posicion).getLon());
-			
-			if(auxLat!=latitudes.get(i) || auxLng!=longitudes.get(i)){
-				distancia=calcularDistancia(auxLat,auxLng,latitudes.get(i),longitudes.get(i));
-				if(distancia<=distanciaMin){
-		    		distanciaMin=distancia;
-		    		puntoCercano.setLat(String.valueOf(latitudes.get(i)));
-		    		puntoCercano.setLon(String.valueOf(longitudes.get(i)));
-		    		if(ruta.size()==posAdd){
-		    			ruta.add(puntoCercano);
-		    		}else{
-		    			ruta.set(posAdd,puntoCercano);
-		    		}
-		    	}	
-			}    	
+			distancia=calcularDistancia(auxLat,auxLng,latitudes.get(i),longitudes.get(i));
+			System.out.println("DISTANCIA "+i+1+": "+distancia);
+			boolean existe=comprobarSiExiste(ruta,String.valueOf(latitudes.get(i)),String.valueOf(longitudes.get(i)));
+			if(distancia<=distanciaMin && distancia!=0 && existe==false){
+	    		distanciaMin=distancia;
+	    		puntoCercano.setLat(String.valueOf(latitudes.get(i)));
+	    		puntoCercano.setLon(String.valueOf(longitudes.get(i)));
+	    	}	   	
 		}
-		return ruta;
+		
+		return puntoCercano;
 	}
+	
+	private boolean comprobarSiExiste(List<POI> ruta,String lat, String lng){
+		
+		for(int i=0; i<ruta.size();i++){
+			if(ruta.get(i).getLat().equals(lat) && ruta.get(i).getLon().equals(lng)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 
 }

@@ -48,20 +48,20 @@ public class RouteGeneratorService {
 	    contextoRutas.setLatitudes(latitudes);
 	    contextoRutas.setLongitudes(longitudes);
 	    
-	    System.out.println("LATITUDES: ");
+	    /*System.out.println("LATITUDES: ");
 	    for(int i=0;i<latitudes.size();i++){
 	    	System.out.println(latitudes.get(i));
 	    }
 	    System.out.println("LONGITUDES: ");
 	    for(int i=0;i<longitudes.size();i++){
 	    	System.out.println(longitudes.get(i));
-	    }
+	    }*/
 	    
 	    List<POI> puntos = this.searcher.generateRoute(contextoRutas);
 	    
-	    /*for(int i=0; i<puntos.size();i++){
+	    for(int i=0; i<puntos.size();i++){
 	    	System.out.println("Punto "+i+": Lat->"+puntos.get(i).getLat()+" Lng->"+puntos.get(i).getLon());
-	    }*/
+	    }
 	    
 	    /*Route route = new Route();
 	    route.setName("Generated "+System.currentTimeMillis());

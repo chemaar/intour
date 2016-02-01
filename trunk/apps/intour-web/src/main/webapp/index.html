@@ -21,12 +21,15 @@
    var map;
    var server = "http://localhost:9000/intour-web";
    markers_data= [];
+   markers_pos= [];
+   var data = [];
+   var aux=0;
    var latOrigen=0;
    var lngOrigen=0;
-   var latPuntoCercano=0;
-   var lngPuntoCercano=0;	
+   	
     
     function loadResults (data) {
+      
       var items;
    
       if (data.suggestion.length > 0) {
@@ -36,25 +39,31 @@
           if (item.lat != undefined && item.lon != undefined) {
             var icon = server+'/img/poi.png';//FIXME per type
             var infoContent = "<ul><li>Name:"+item.name+"</li><li>Description:"+ item.description+"</li><li>Lat:"+item.lat+"</li><li>Long:"+item.lon+"</li></ul>";
-		    markers_data.push({
-              lat : item.lat,
-              lng : item.lon,
-              title : item.name,
-              description:item.description,
-              uri: item.uri,
-              infoWindow: {
-        		content : infoContent
-		      }
-            });
+		    
+		    if(item.lat !="" && item.lon !=""){
+			   	markers_data.push({
+	              lat : item.lat,
+	              lng : item.lon,
+	              title : item.name,
+	              description:item.description,
+	              uri: item.uri,
+	              infoWindow: {
+	        		content : infoContent
+			      }
+	            });
+	            markers_pos.push({
+	              lat : item.lat,
+	              lng : item.lon});
+			    }
+ 
           }
         }
       }
       	localizarOrigen();
         map.addMarkers(markers_data);
-        $('#results').append("latOrigen:"+latOrigen);
-		$('#results').append("lngOrigen:"+lngOrigen);
-        calcularDistancia();
-		$('#results').append("Lat:"+latPuntoCercano+",Longitud:"+lngPuntoCercano);
+        if(markers_pos.length>=2 && latOrigen!=0 && lngOrigen!=0){
+        	calcularRutaREST();
+        }
     }
 
 	function localizarOrigen(){
@@ -63,6 +72,7 @@
 		  success: function(position) {
 		  	latOrigen=position.coords.latitude;
 		  	lngOrigen=position.coords.longitude;
+		  	//$('#results').append("latOrigen:"+latOrigen+",lngOrigen:"+lngOrigen);
 		  	var infoContent = "<ul><li>Name:Mi posicion actual</li><li>Lat:"+latOrigen+"</li><li>Long:"+lngOrigen+"</li></ul>";
 		    map.setCenter(position.coords.latitude, position.coords.longitude);
 		    map.addMarker({
@@ -73,6 +83,7 @@
         		content : infoContent
 		      }
 			});
+			
 		  },
 		  error: function(error) {
 		    alert('Geolocation failed: '+error.message);
@@ -80,66 +91,7 @@
 		  not_supported: function() {
 		    alert("Your browser does not support geolocation");
 		  },
-		  always: function() {
-		    alert("Done!");
-		  }
 		});
-	
-	}
-	
-	function calcularDistancia(){
-		
-		var difLat;
-		var difLng;
-		var squareLat;
-		var squareLng;
-		var sumSquare;
-		var distancia;
-		var distMin=999999999999999;
-		
-		
-		for(var i=0; i<markers_data.length; i++){
-			
-			$('#results').append("markers_data[i].lat:"+markers_data[i].lat);
-			$('#results').append("markers_data[i].lng:"+markers_data[i].lng);
-			$('#results').append("latOrigen:"+latOrigen);
-			$('#results').append("lngOrigen:"+lngOrigen);
-			
-			if(latOrigen>=0){
-				difLat=markers_data[i].lat-latOrigen;
-			}else{
-				var aux=Math.abs(latOrigen);
-				$('#results').append("auxLat:"+aux);
-				difLat=markers_data[i].lat+aux;
-			}
-			$('#results').append("difLat:"+difLat);
-			
-			if(lngOrigen>=0){
-				difLng=markers_data[i].lng-lngOrigen;
-			}else{
-				var aux=Math.abs(lngOrigen);
-				$('#results').append("auxLng:"+aux);
-				difLng=markers_data[i].lng+aux;
-			}
-			$('#results').append("difLng:"+difLng);
-			
-			squareLat= difLat*difLat;
-			$('#results').append("squareLat:"+squareLat);
-			squareLng= difLng*difLng;
-			$('#results').append("squareLng:"+squareLng);
-			sumSquare=squareLat+squareLng;
-			$('#results').append("sumSquare:"+sumSquare);
-			distancia=Math.sqrt(sumSquare); 
-			$('#results').append("distancia:"+distancia);
-			
-			if(distancia<distMin){
-				distMin=distancia;
-				latPuntoCercano=markers_data[i].lat;
-				lngPuntoCercano=markers_data[i].lng;
-			}
-		
-		}
-		
 	
 	}
 
@@ -162,16 +114,51 @@
 
       map.setCenter(lat, lng);
     });
-
+    
+ 
+ function eliminarRepetidos(pos){
+ 	
+ 	var posicionEliminar=0;
+ 	var longitud=data.length;
+ 	for(var i=0; i<markers_pos.length;i++){
+ 		if(markers_pos[pos].lat==markers_pos[i].lat && markers_pos[pos].lng==markers_pos[i].lng && pos !=i ){
+ 			posicionEliminar=i;
+ 			if(posicionEliminar<pos){
+ 				posicionEliminar=0;
+ 				return -1;
+ 			}else{
+ 				posicionEliminar=0;
+ 				data[longitud]=markers_pos[pos];
+ 			}	
+ 		}
+ 	}
+ 	if(posicionEliminar==0){
+		data[longitud]=markers_pos[pos]; 	
+ 	}
+ }
+ 
+ function vaciarDatos(){
+ 	for(var i=0; i<data.length;i++){
+ 		data[i]="";
+ 	}
+ }
+ 
 function calcularRutaREST(){
-   var data = [];
-   data[0]='Ejemplo 1';
-   data[1]='Ejemplo 2';
-   //FIXME: Bucle para cargar los datos
-   
+
+   $('#results').append("latOrigen:"+latOrigen+",lngOrigen:"+lngOrigen);
+   //var data = [];
+   //data[0]='Ejemplo 1';
+   //data[1]='Ejemplo 2';
+   //Cargamos los datos para enviarles al servicio de calculo de ruta
+   vaciarDatos();
+   for(var i=0; i< markers_pos.length;i++){
+   		eliminarRepetidos(i);
+   		//data[i]= markers_pos[i];
+   }
    //Fin
    var markers_request = JSON.stringify(data);
-   var serializedData='{"param1":"hello","param2":"world","markers":'+markers_request+'}';
+   //var serializedData='{"param1":"hello","param2":"world","markers":'+markers_request+'}';
+   var serializedData='{"latOrigen":'+latOrigen+',"lngOrigen":'+lngOrigen+',"markers":'+markers_request+'}';
    var request = $.ajax({
         url: server+'/services/route',
         headers: {          
@@ -243,7 +230,6 @@ function calcularRutaREST(){
  }
 
     $(document).ready(function(){
-    calcularRutaREST();
     
       prettyPrint();
       initMap();
@@ -531,6 +517,8 @@ function calcularRutaREST(){
     		
 		  </div>
 		</form>
+		<hr>
+		
       </div>
 
       <hr>

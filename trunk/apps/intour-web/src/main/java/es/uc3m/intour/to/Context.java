@@ -5,8 +5,8 @@ public class Context {
 	private String lang = "en";
 	private String name = "";
 	private String input="";
-
 	private String query = "";
+	
 	public String getLang() {
 		return lang;
 	}

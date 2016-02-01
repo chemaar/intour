@@ -4,6 +4,7 @@ import java.util.List;
 
 import es.uc3m.intour.appserv.SearchAppServ;
 import es.uc3m.intour.to.Context;
+import es.uc3m.intour.to.ContextRoute;
 import es.uc3m.intour.to.POI;
 import es.uc3m.intour.to.Person;
 
@@ -18,5 +19,8 @@ public class SearchBusinessImpl implements SearchBusiness{
 	
 	public List<Person> searchPerson(Context context){
 		return this.appServ.searchPerson(context);
+	}
+	public List<POI> generateRoute(ContextRoute contextoRutas){
+		return this.appServ.generateRoute(contextoRutas);
 	}
 }

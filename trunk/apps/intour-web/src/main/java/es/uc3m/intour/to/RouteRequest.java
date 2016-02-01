@@ -17,23 +17,23 @@ import javax.xml.bind.annotation.XmlType;
     "others"
 })
 public class RouteRequest {
-    @XmlElement public String param1 = "";
-    @XmlElement public String param2 = "";
+    @XmlElement public String latOrigen = "";
+    @XmlElement public String lngOrigen = "";
     @XmlElement public List<String> markers = new LinkedList<String>();
     public RouteRequest(){
     	
     }
-	public String getParam1() {
-		return param1;
+	public String getLatOrigen() {
+		return latOrigen;
 	}
-	public void setParam1(String param1) {
-		this.param1 = param1;
+	public void setLatOrigen(String latOrigen) {
+		this.latOrigen = latOrigen;
 	}
-	public String getParam2() {
-		return param2;
+	public String getLngOrigen() {
+		return lngOrigen;
 	}
-	public void setParam2(String param2) {
-		this.param2 = param2;
+	public void setLngOrigen(String lngOrigen) {
+		this.lngOrigen = lngOrigen;
 	}
 	public List<String> getMarkers() {
 		return markers;

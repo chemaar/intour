@@ -13,6 +13,7 @@ import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.rdf.model.Literal;
 
 import es.uc3m.intour.to.Context;
+import es.uc3m.intour.to.ContextRoute;
 import es.uc3m.intour.to.POI;
 import es.uc3m.intour.to.Person;
 import es.uc3m.intour.utils.PrefixManager;
@@ -25,7 +26,7 @@ public class SPARQLPOIDAO implements POIDAO {
 	
 	public static final String POI_QUERY="poi.query"; //See SPARQLQueriesLoader.properties
 	public static final String PERSON_QUERY="person.query";
-	public static String consulta; 
+	public static String consulta;
 	
 
 	public List<Person> searchPerson(Context context) {
@@ -157,5 +158,86 @@ public class SPARQLPOIDAO implements POIDAO {
 		return "";
 	}
 
+	public List<POI> generateRoute(ContextRoute contextoRutas){
+		
+		double latOrigen=contextoRutas.getLatOrigen();
+		double lngOrigen=contextoRutas.getLngOrigen();
+		List<Double> latitudes = contextoRutas.getLatitudes();
+		List<POI> ruta = new LinkedList<POI>();
+	    POI inicio = new POI();
+	    inicio.setLat(String.valueOf(latOrigen));
+	    inicio.setLon(String.valueOf(lngOrigen));
+	    ruta.add(inicio);
+	    int posicion=0;
+	    /*Suponemos que la longitud de las latitudes es equivalente a las longitudes*/
+	    int numPoints=latitudes.size()+1;
+	    
+	    while(ruta.size()!=numPoints){
+	    	ruta=calcularPuntoCercano(ruta,posicion,contextoRutas);
+	    	posicion++;
+	    }
+		return ruta; 
+	}
+	
+	private double calcularDistancia(double latOrig, double lngOrig, double latDest, double lngDest){
+		
+		double distancia=0;
+		double difLat;
+		double difLng;
+		double squareLat;
+		double squareLng;
+		double sumsquare;
+		double aux;
+		
+		if(latOrig>=0){
+			difLat=latDest-latOrig;
+		}else{
+			aux=Math.abs(latOrig);
+			difLat=latDest+aux;
+		}
+		if(lngOrig>=0){
+			difLng=lngDest-lngDest;
+		}else{
+			aux=Math.abs(lngOrig);
+			difLng=lngDest+aux;
+		}
+		
+		squareLat=Math.pow(difLat, 2);
+		squareLng=Math.pow(difLng, 2);
+		sumsquare=squareLat+squareLng;
+		distancia=Math.sqrt(sumsquare);
+		return distancia;
+	}
+	
+	private List<POI> calcularPuntoCercano(List<POI> ruta,int posicion,ContextRoute contextoRutas){
+		
+		List<Double> latitudes = contextoRutas.getLatitudes();
+		List<Double> longitudes = contextoRutas.getLongitudes();
+		POI puntoCercano = new POI();
+		double distanciaMin=Double.MAX_VALUE;
+	    double distancia;
+	    int posAdd=posicion+1;
+	    
+		for(int i=0; i<latitudes.size();i++){
+			
+			double auxLat=Double.parseDouble(ruta.get(posicion).getLat());
+			double auxLng=Double.parseDouble(ruta.get(posicion).getLon());
+			
+			if(auxLat!=latitudes.get(i) || auxLng!=longitudes.get(i)){
+				distancia=calcularDistancia(auxLat,auxLng,latitudes.get(i),longitudes.get(i));
+				if(distancia<=distanciaMin){
+		    		distanciaMin=distancia;
+		    		puntoCercano.setLat(String.valueOf(latitudes.get(i)));
+		    		puntoCercano.setLon(String.valueOf(longitudes.get(i)));
+		    		if(ruta.size()==posAdd){
+		    			ruta.add(puntoCercano);
+		    		}else{
+		    			ruta.set(posAdd,puntoCercano);
+		    		}
+		    	}	
+			}    	
+		}
+		return ruta;
+	}
 
 }

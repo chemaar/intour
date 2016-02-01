@@ -16,6 +16,7 @@ import javax.xml.bind.annotation.XmlType;
 public class Route {
 	private String name="";
 	private List<POI> camino = new LinkedList<POI>();
+	
 	public String getName() {
 		return name;
 	}

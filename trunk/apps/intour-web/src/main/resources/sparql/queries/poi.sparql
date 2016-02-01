@@ -10,4 +10,4 @@ SELECT DISTINCT *  WHERE {
  }
  FILTER regex(?label,?name) .
 }
-LIMIT 10
+LIMIT 1

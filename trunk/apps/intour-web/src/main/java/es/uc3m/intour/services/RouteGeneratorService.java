@@ -57,17 +57,17 @@ public class RouteGeneratorService {
 	    	System.out.println(longitudes.get(i));
 	    }*/
 	    
-	    List<POI> puntos = this.searcher.generateRoute(contextoRutas);
+	    List<POI> camino = this.searcher.generateRoute(contextoRutas);
 	    
-	    for(int i=0; i<puntos.size();i++){
-	    	System.out.println("Punto "+i+": Lat->"+puntos.get(i).getLat()+" Lng->"+puntos.get(i).getLon());
+	    for(int i=0; i<camino.size();i++){
+	    	System.out.println("Punto "+i+": Lat->"+camino.get(i).getLat()+" Lng->"+camino.get(i).getLon());
 	    }
 	    
-	    /*Route route = new Route();
-	    route.setName("Generated "+System.currentTimeMillis());
-	    route.setCamino(puntos);*/
-	    
 	    Route route = new Route();
+	    route.setName("Generated "+System.currentTimeMillis());
+	    route.setCamino(camino);
+	    
+	    /*Route route = new Route();
 	    route.setName("Generated "+System.currentTimeMillis());
 	    //Calcula ruta
 	    List<POI> camino = new LinkedList<POI>();
@@ -77,7 +77,7 @@ public class RouteGeneratorService {
 	    inicio.setName("Lega");
 	    inicio.setDescription("Ciudad");
 		camino.add(inicio);
-		route.setCamino(camino);
+		route.setCamino(camino);*/
 		return route;
 	}
 	

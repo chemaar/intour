@@ -15,6 +15,7 @@
         margin: 60px 0;
 	}*/
 	
+	
 	/*CABECERA*/
 	#Cabecera{
 		height: 100%;
@@ -96,10 +97,105 @@
 		 color: white;
 		 font-size: small;
 	}
+	/*ICONOS*/
+	#Icono1{
+		float: left;
+    	margin-top: -23%;
+    	margin-left: 13%;
+	}
+	#Icono2{
+		float: left;
+    	margin-top: -23%;
+    	margin-left: 39%;
+	}
+	#Icono3{
+		float: left;
+   		margin-top: -23%;
+    	margin-left: 61%;
+	}
+	#localizacion{
+		width: 16%;
+    	margin-left: 2%;
+    	margin-top: -2%;
+	}
+	#cultura{
+		width: 19%;
+    	margin-left: 4%;
+	}
+	#turismo{
+		width: 24%;
+		margin-left: 23%;
+	}
+	#titulo1,#titulo2,#titulo3{
+		font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+    	font-size: 22px;
+    	font-weight: 800;
+	}
+	#titulo1{
+		color: #2196F3;
+	}
+	#titulo2{
+    	color: #9C27B0;
+    	margin-left: 4%;
+	}
+	#titulo3{
+		color: #FB5621;
+	}
+	#p1,#p2,#p3{
+		font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+    	font-size: 13px;
+    	text-align: center;
+	}
+	#p1{
+		width: 26%;
+    	margin-left: -2%;
+    	margin-top: 0%;
+	}
+	#p2{
+		width: 37%;
+    	margin-left: -4%;
+	
+	}
+	#p3{
+		width: 50%;
+    	margin-left: 11%;
+	}
+	
+	/*BIENVENIDA*/
+	#Bienvenida{
+		background-color: #E5E5E5;
+	}
+	#msg1{
+		font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+	    font-size: 53px;
+	    text-align: center;
+	    color: #444444;
+	    font-weight: 900;
+	    margin-top: -56%;
+	    margin-bottom: 45%;
+	    margin-left: 41%;
+	}
+	#msg2{
+		font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+	    font-size: 29px;
+	    text-align: center;
+	    font-weight: 900;
+	    margin-top: -44%;
+	    margin-bottom: 44%;
+	    margin-left: 52%;
+	    width: 36%;
+	    color: #444444;
+	}
+	
 	/*CONTENIDO*/
 	#Contenido{
 		heigth: 100%;
-	
+		background-image:url( "../img/venecia.jpg");
+		background-size: 100% 60%;
+		background-repeat: no-repeat;
+		margin-left: -3%;
+    	margin-right: -3%;
+    	padding-top: 2%;
 	}
 	#CContenido{
 		max-width:1085px;
@@ -121,12 +217,14 @@
 	
 	}
 	
-	
-	
+	.container,hr{
+		visibility: hidden;
+	}
       /* Main marketing message and sign up button */
       .jumbotron {
-        margin: 80px 0;
+      	visibility: hidden;
         text-align: center;
+        padding-bottom: 50%;
       }
       .jumbotron h1 {
         font-size: 100px;

@@ -28,146 +28,175 @@
 
 <body>
 
-	<div id="Cabecera">
-		
-			<div id="CCabecera">
-				<div id="logo">
-					<img id="imageLogo" src="./img/LogoHorizontal.png" alt="Logo In-Tour">
-				</div>
-				<div id="menu">
+	
+		<div id="Cabecera">
+			
+				<div id="CCabecera">
+					<div id="logo">
+						<img id="imageLogo" src="./img/LogoHorizontal.png" alt="Logo In-Tour">
+					</div>
+					<div id="menu">
+					
+					</div>
 				
 				</div>
-			
-			</div>
+		</div>
 		
-	</div>
-	
-	<div id="Contenido">
-		<div id="CContenido">
-		
-			<!-- Jumbotron -->
-		  <div class="jumbotron">
-		  
-		  	<div id="Buscador">
-		  	
-			    <h2>Intelligent Tourism!</h2>
-			    <p class="lead">Search for...</p>
-			    <form role="form-horizontal" role="form" id="validationForm">
-					  <div class="form-group">
-					   <div class="input-group">
-					   
-						  <input type="text" class="form-control" placeholder="Search for Person" id="name">
-				 		  <span class="input-group-btn">
-				    		<button onclick="searchPerson();" class="btn btn-default" type="button">Go!</button>
-				  		  </span>
-				  		  
-				  		  <p id="noResults">There isn´t any result</p>
-				  		</div><!-- /input-group -->
-				  		<br>
-				  		
-				  		 <div class="input-group">
-				  		   <input type="button" onclick="search(0);" class="valores" value="Novalue" id="nombre">
-						 </div>
-						 <br>
-						 
-						 <div class="input-group">
-				  		   <input type="button" onclick="search(1);" class="valores" value="Novalue" id="birthPlace">
-						 </div>
-						 <br>
-						 
-						 <div class="input-group">
-				  		   <input type="button" onclick="search(2);" class="valores" value="Novalue" id="birthDate">
-						 </div>
-						 <br>
-						 
-						 <div class="input-group">
-				  		   <input type="button" onclick="search(3);" class="valores" value="Novalue" id="description">
-						 </div>
-						 <br>
-						 
-						 <div class="input-group">
-				  		   <input type="button" onclick="search(4);" class="valores" value="Novalue" id="nationality">
-						 </div>
-						 <br>
-						 
-						 <div class="input-group">
-				  		   <input type="button" onclick="search(5);" class="valores" value="Novalue" id="field">
-						 </div>
-						 <br>
-						 
-						 <div class="input-group">
-				  		   <input type="button" onclick="search(6);" class="valores" value="Novalue" id="museum">
-						 </div>
-						 <br>
-						
-					  </div>
-					</form>
-			</div>
-			<div id="Mapa">
-				   <p style="text-align:center">
-				 		<div id="map" style="width: 750px;height: 500px;"></div>
-				 	</p>
-			</div>
+		<div id="Contenido">
+			<div id="CContenido">
 			
-		  </div>
-			
-		<!--PRUEBAS-->	
-			
-			<div class="container">
-		  
-				<div id="linkPlaces" class="container">
-					<h3>Links to places..</h3>
-			 		<div id="results"></div>
+				
+				<!-- Jumbotron -->
+			  <div id="Jumbo" class="jumbotron">
+			  
+			  	<div id="Buscador">
+			  	
+				    <h2>Intelligent Tourism!</h2>
+				    <p class="lead">Search for...</p>
+				    <form role="form-horizontal" role="form" id="validationForm">
+						  <div class="form-group">
+						   <div class="input-group">
+						   
+							  <input type="text" class="form-control" placeholder="Search for Person" id="name">
+					 		  <span class="input-group-btn">
+					    		<button onclick="searchPerson();" class="btn btn-default" type="button">Go!</button>
+					  		  </span>
+					  		  
+					  		  <p id="noResults">There isn´t any result</p>
+					  		</div><!-- /input-group -->
+					  		<br>
+					  		
+					  		 <div class="input-group">
+					  		   <input type="button" onclick="search(0);" class="valores" value="Novalue" id="nombre">
+							 </div>
+							 <br>
+							 
+							 <div class="input-group">
+					  		   <input type="button" onclick="search(1);" class="valores" value="Novalue" id="birthPlace">
+							 </div>
+							 <br>
+							 
+							 <div class="input-group">
+					  		   <input type="button" onclick="search(2);" class="valores" value="Novalue" id="birthDate">
+							 </div>
+							 <br>
+							 
+							 <div class="input-group">
+					  		   <input type="button" onclick="search(3);" class="valores" value="Novalue" id="description">
+							 </div>
+							 <br>
+							 
+							 <div class="input-group">
+					  		   <input type="button" onclick="search(4);" class="valores" value="Novalue" id="nationality">
+							 </div>
+							 <br>
+							 
+							 <div class="input-group">
+					  		   <input type="button" onclick="search(5);" class="valores" value="Novalue" id="field">
+							 </div>
+							 <br>
+							 
+							 <div class="input-group">
+					  		   <input type="button" onclick="search(6);" class="valores" value="Novalue" id="museum">
+							 </div>
+							 <br>
+							
+						  </div>
+						</form>
 				</div>
+				<div id="Mapa">
+					   <p style="text-align:center">
+					 		<div id="map" style="width: 750px;height: 500px;"></div>
+					 	</p>
+				</div>
+				
+				
+			  </div>
+				
+				<div id="Pruebas"> <!--PRUEBAS-->	
+			  		
+			  		 
+
+					<div id="linkPlaces" class="container">
+						<h3>Links to places..</h3>
+				 		<div id="results"></div>
+					</div>
+					
+					  <hr>
+					<div class="container">
+					    <h3>DEBUG: JSON Response..</h3>
+				 		<div id="intour-results"></div>
+					</div>
+					
 				
 				  <hr>
-				<div class="container">
-				    <h3>DEBUG: JSON Response..</h3>
-			 		<div id="intour-results"></div>
-				</div>
-				
+				  
+				  <div class="container">
+						<h3>Results of people..</h3>
+				 		<div id="resultsPerson"></div>
+				  </div>
 			
-			  <hr>
-			  
-			  <div class="container">
-					<h3>Results of people..</h3>
-			 		<div id="resultsPerson"></div>
-				</div>
-				
-		
-			</div> <!-- /container -->
-		
+				</div> <!-- /FIN PRUEBAS -->
+			
+			</div>
 		
 		</div>
-	
-	</div>
-	
-	
-
-	
-	<div id="Footer">
-		<div id="FFooter">
-				<div id="Inf1">
-					<h3 id="tit1">CONTACTA CON NOSOTROS</h3>
-					<p class="InfPie">Avda. Universidad, 30</p>
-					<p class="InfPie">28911 Legan&eacute;s, Madrid</p>
-					<p class="InfPie">E-mail: contacto@In-Tour.com</p>
-					<p class="InfPie">N&uacute;mero contacto: 916 24 95 00</p>
-				</div>
-				<div id="Inf2">
-					<h3 id="tit2">INSPIRATE Y PLANIFICA</h3>
-					<ul>
-						<li class="InfPie" >Localizaci&oacute;n de POIs</li>
-						<li class="InfPie" >Generaci&oacute;n de rutas</li>
-						<li class="InfPie" >Inmersi&oacute;n en el sector tur&iacute;stico</li>
-						<li class="InfPie">Adquisici&oacute;n de conocimiento cultural</li>
-						<li class="InfPie" >La mejor forma de entretenimiento para nuestros viajeros</li>
-					</ul>
-				</div>
-			<p id="marcaUC3M">&copy; UC3M 2016</p>		
+		
+		<div id="Iconos">
+			<div id="IIconos">
+				  		
+			  		<div id="Icono1">
+			  			<h3 id="titulo1">Localiza tus POIs </h3>
+			  			<img id="localizacion" src="./img/localizacion.png" alt="localizacion">
+			  			<p id="p1">Podras localizar puntos de ubicaci&oacute;n espec&iacute;fica mediante
+			  			caracter&iacute;sticas de una persona, lugar, organización o evento que sea interesante para ti</p>
+			  		</div>
+			  		
+			  		<div id="Icono2">
+			  			<h3 id="titulo2">Cultur&iacute;zate </h3>
+			  			<img id="cultura" src="./img/cultura.png" alt="cultura">
+			  			<p id="p2">Te permitir&aacute; adquirir conocimientos sobre aquellos aspectos relacionados con aquello que busques</p>
+			  		</div>
+			  		
+			  		<div id="Icono3">
+			  			<h3 id="titulo3">Comienza tu experiencia tur&iacute;stica</h3>
+			  			<img id="turismo" src="./img/turismo.png" alt="turismo">
+			  			<p id="p3">Si te encanta viajar, esta es tu soluci&oacute;n: descubre, visita y completa tus rutas.</p>
+			  		</div>
+			</div>
+				  		
 		</div>
-	</div>
+		
+		<div id="Bienvenida">
+			<div id="BBienvenida">
+				<p id="msg1">Planifica tu viaje aqu&iacute;:</p>
+				<p id="msg2">Crea nuevas experiencias seg&uacute;n tus puntos de inter&eacute;s</p>
+			</div>
+		</div>
+		
+		<div id="Footer">
+			<div id="FFooter">
+					<div id="Inf1">
+						<h3 id="tit1">CONTACTA CON NOSOTROS</h3>
+						<p class="InfPie">Avda. Universidad, 30</p>
+						<p class="InfPie">28911 Legan&eacute;s, Madrid</p>
+						<p class="InfPie">E-mail: contacto@In-Tour.com</p>
+						<p class="InfPie">N&uacute;mero contacto: 916 24 95 00</p>
+					</div>
+					<div id="Inf2">
+						<h3 id="tit2">INSPIRATE Y PLANIFICA</h3>
+						<ul>
+							<li class="InfPie" >Localizaci&oacute;n de POIs</li>
+							<li class="InfPie" >Generaci&oacute;n de rutas</li>
+							<li class="InfPie" >Inmersi&oacute;n en el sector tur&iacute;stico</li>
+							<li class="InfPie">Adquisici&oacute;n de conocimiento cultural</li>
+							<li class="InfPie" >La mejor forma de entretenimiento para nuestros viajeros</li>
+						</ul>
+					</div>
+				<p id="marcaUC3M">&copy; UC3M 2016</p>		
+			</div>
+		</div>
 
-  
+</body>
 
-</body></html>
+</html>

@@ -1,11 +1,11 @@
-SELECT ?label ?birthPlace ?birthDate ?description ?nationality  ?field ?museum WHERE{
+SELECT DISTINCT ?label ?birthPlace ?birthDate ?description ?nationality  ?field ?museum WHERE{
 
      ?person dbo:birthDate ?birthDate .
      ?person dc:description ?description .
-
  optional{
       ?person dbo:birthPlace ?birthAux .
       ?birthAux rdfs:label ?birthPlace.
+      FILTER(lang(?birthPlace)=?lang).
  }
  optional{
       ?person dbo:field ?fieldAux .

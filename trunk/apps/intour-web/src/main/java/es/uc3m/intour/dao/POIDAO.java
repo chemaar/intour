@@ -3,13 +3,12 @@ package es.uc3m.intour.dao;
 import java.util.List;
 
 import es.uc3m.intour.to.Context;
-import es.uc3m.intour.to.ContextRoute;
+import es.uc3m.intour.to.Entity;
 import es.uc3m.intour.to.POI;
-import es.uc3m.intour.to.Person;
 
 public interface POIDAO {
 
 	public abstract List<POI> search(Context context);
-	public abstract List<Person> searchPerson(Context context);
-	public abstract List<POI> generateRoute(ContextRoute contextoRutas);
+	public abstract List<Entity> searchEntity(Context context);
+	
 }

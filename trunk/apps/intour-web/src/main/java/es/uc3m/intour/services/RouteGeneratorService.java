@@ -48,15 +48,6 @@ public class RouteGeneratorService {
 	    contextoRutas.setLatitudes(latitudes);
 	    contextoRutas.setLongitudes(longitudes);
 	    
-	    /*System.out.println("LATITUDES: ");
-	    for(int i=0;i<latitudes.size();i++){
-	    	System.out.println(latitudes.get(i));
-	    }
-	    System.out.println("LONGITUDES: ");
-	    for(int i=0;i<longitudes.size();i++){
-	    	System.out.println(longitudes.get(i));
-	    }*/
-	    
 	    List<POI> camino = this.searcher.generateRoute(contextoRutas);
 	    
 	    for(int i=0; i<camino.size();i++){
@@ -66,18 +57,6 @@ public class RouteGeneratorService {
 	    Route route = new Route();
 	    route.setName("Generated "+System.currentTimeMillis());
 	    route.setCamino(camino);
-	    
-	    /*Route route = new Route();
-	    route.setName("Generated "+System.currentTimeMillis());
-	    //Calcula ruta
-	    List<POI> camino = new LinkedList<POI>();
-	    POI inicio = new POI();
-	    inicio.setLat("40.3167");
-	    inicio.setLon("-3.75");
-	    inicio.setName("Lega");
-	    inicio.setDescription("Ciudad");
-		camino.add(inicio);
-		route.setCamino(camino);*/
 		return route;
 	}
 	
@@ -88,11 +67,11 @@ public class RouteGeneratorService {
 		
 		for(int i=0;i<markers.size();i++){
 			
-			if(markers.get(i)!="{" && markers.get(i)!="}"){
-				if(markers.get(i)=="lat"){
+			if(!markers.get(i).equals("{") && !markers.get(i).equals("}")){
+				if(markers.get(i).equals("lat")){
 					auxLat=Double.parseDouble(markers.get(i+1));
 					latitudes.add(auxLat);
-				}else if(markers.get(i)=="lng"){
+				}else if(markers.get(i).equals("lng")){
 					auxLng=Double.parseDouble(markers.get(i+1));
 					longitudes.add(auxLng);
 				}

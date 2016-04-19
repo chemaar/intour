@@ -13,25 +13,24 @@ import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.rdf.model.Literal;
 
 import es.uc3m.intour.to.Context;
-import es.uc3m.intour.to.ContextRoute;
+import es.uc3m.intour.to.Entity;
 import es.uc3m.intour.to.POI;
-import es.uc3m.intour.to.Person;
 import es.uc3m.intour.utils.PrefixManager;
 import es.uc3m.intour.utils.SPARQLQueriesHelper;
 
 public class SPARQLPOIDAO implements POIDAO {
 
 
-	private String endpoint = "http://dbpedia.org/sparql"; //FIXME: Endpoint in the context?
+	private String endpoint = "http://dbpedia.org/sparql/"; //FIXME: Endpoint in the context?
 	
 	public static final String POI_QUERY="poi.query"; //See SPARQLQueriesLoader.properties
 	public static final String PERSON_QUERY="person.query";
 	public static String consulta;
 	
 
-	public List<Person> searchPerson(Context context) {
+	public List<Entity> searchEntity(Context context) {
 		
-		List<Person> people = new LinkedList<Person>();
+		List<Entity> people = new LinkedList<Entity>();
 		
 		//Create params
 		Map<String,String> params = new HashMap<String,String>();
@@ -50,7 +49,7 @@ public class SPARQLPOIDAO implements POIDAO {
 				String nationality;
 				String field;
 				String museum;
-				Person person = new Person();
+				Entity person = new Entity();
 				
 				for(int i = 0; i<results.length;i++){
 					//FIXME: Processing: literal, literal with lang and resource
@@ -102,6 +101,8 @@ public class SPARQLPOIDAO implements POIDAO {
 			consulta="poiField.query";
 		}else if(input.equals("6")){
 			consulta="poiMuseum.query";
+		}else if(input.equals("7")){
+			consulta="poi.query";
 		}
 		
 		Query query = createQuery(consulta,params);
@@ -115,14 +116,14 @@ public class SPARQLPOIDAO implements POIDAO {
 		String lon;
 		for(int i = 0; i<results.length;i++){
 			//FIXME: Processing: literal, literal with lang and resource
-			label = extractStringValue(results[i],"label");
+			label = extractStringValue(results[0],"label");
 			//uriPOI = (results[i].getResource("poi")!=null?results[i].getResource("poi").getURI():"");
 			//comment = extractStringValue(results[i],"description");
-			lat = extractStringValue(results[i],"lat");
-			lon = extractStringValue(results[i],"long");
+			lat = extractStringValue(results[0],"lat");
+			lon = extractStringValue(results[0],"long");
 			POI poi = new POI();
 			//poi.setUri(uriPOI);
-			poi.setName(label);
+			poi.setName(context.getName());
 			//poi.setDescription(comment);
 			poi.setLat(lat);
 			poi.setLon(lon);
@@ -157,95 +158,5 @@ public class SPARQLPOIDAO implements POIDAO {
 		}
 		return "";
 	}
-
-	public List<POI> generateRoute(ContextRoute contextoRutas){
-		
-		double latOrigen=contextoRutas.getLatOrigen();
-		double lngOrigen=contextoRutas.getLngOrigen();
-		List<Double> latitudes = contextoRutas.getLatitudes();
-		List<POI> ruta = new LinkedList<POI>();
-	    POI inicio = new POI();
-	    inicio.setLat(String.valueOf(latOrigen));
-	    inicio.setLon(String.valueOf(lngOrigen));
-	    ruta.add(inicio);
-	    int posicion=0;
-	    /*Suponemos que la longitud de las latitudes es equivalente a las longitudes*/
-	    int numPoints=latitudes.size()+1;
-	    
-	    while(ruta.size()!=numPoints){
-	    	POI auxPoi = new POI();
-	    	auxPoi=calcularPuntoCercano(ruta,posicion,contextoRutas);
-	    	ruta.add(auxPoi);
-	    	posicion++;
-	    }
-		return ruta; 
-	}
-	
-	private double calcularDistancia(double latOrig, double lngOrig, double latDest, double lngDest){
-		
-		double distancia=0;
-		double difLat;
-		double difLng;
-		double squareLat;
-		double squareLng;
-		double sumsquare;
-		double aux;
-		
-		if(latOrig>=0){
-			difLat=latDest-latOrig;
-		}else{
-			aux=Math.abs(latOrig);
-			difLat=latDest+aux;
-		}
-		if(lngOrig>=0){
-			difLng=lngDest-lngDest;
-		}else{
-			aux=Math.abs(lngOrig);
-			difLng=lngDest+aux;
-		}
-		
-		squareLat=Math.pow(difLat, 2);
-		squareLng=Math.pow(difLng, 2);
-		sumsquare=squareLat+squareLng;
-		distancia=Math.sqrt(sumsquare);
-		return distancia;
-	}
-	
-	private POI calcularPuntoCercano(List<POI> ruta,int posicion,ContextRoute contextoRutas){
-		
-		List<Double> latitudes = contextoRutas.getLatitudes();
-		List<Double> longitudes = contextoRutas.getLongitudes();
-		double auxLat=Double.parseDouble(ruta.get(posicion).getLat());
-		double auxLng=Double.parseDouble(ruta.get(posicion).getLon());
-		POI puntoCercano = new POI();
-		double distanciaMin=Double.MAX_VALUE;
-	    double distancia;
-	    
-		
-		for(int i=0; i<latitudes.size();i++){
-			
-			distancia=calcularDistancia(auxLat,auxLng,latitudes.get(i),longitudes.get(i));
-			System.out.println("DISTANCIA "+i+1+": "+distancia);
-			boolean existe=comprobarSiExiste(ruta,String.valueOf(latitudes.get(i)),String.valueOf(longitudes.get(i)));
-			if(distancia<=distanciaMin && distancia!=0 && existe==false){
-	    		distanciaMin=distancia;
-	    		puntoCercano.setLat(String.valueOf(latitudes.get(i)));
-	    		puntoCercano.setLon(String.valueOf(longitudes.get(i)));
-	    	}	   	
-		}
-		
-		return puntoCercano;
-	}
-	
-	private boolean comprobarSiExiste(List<POI> ruta,String lat, String lng){
-		
-		for(int i=0; i<ruta.size();i++){
-			if(ruta.get(i).getLat().equals(lat) && ruta.get(i).getLon().equals(lng)){
-				return true;
-			}
-		}
-		return false;
-	}
-	
 
 }

@@ -5,9 +5,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "person")
+@XmlRootElement(name = "entity")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "person", propOrder = {
+@XmlType(name = "entity", propOrder = {
     "name",
     "birthPlace",
     "birthDate",
@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 
 
-public class Person {
+public class Entity {
 	
 	private String name="";
 	private String birthPlace="";
@@ -28,7 +28,7 @@ public class Person {
 	private String field="";
 	private String museum="";
 	
-	public Person(){
+	public Entity(){
 		
 	}
 	public String getName() {
@@ -77,7 +77,7 @@ public class Person {
 
 	@Override
 	public String toString() {
-		return "Person [name=" + name + ", birthPlace=" + birthPlace
+		return "Entity [name=" + name + ", birthPlace=" + birthPlace
 				+ ", birthDate=" + birthDate + ", description=" + description
 				+ ", nationality=" + nationality + ", field=" + field
 				+ ", museum=" + museum + "]";

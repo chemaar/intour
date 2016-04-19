@@ -1,0 +1,476 @@
+	/*CABECERA*/
+	#Cabecera{
+		height: 100%;
+		cursor: default;
+		background-color: #444444;
+		background-size: cover;
+		margin-top: -1%;
+    	margin-left: -3%;
+    	margin-right: -3%;
+	}
+  
+	#CCabecera{
+		margin:auto;
+		max-width:1085px;
+		height: 103px;
+	}
+	#logo{
+		height: 100%;
+		width: 30%; 
+		float: left;
+		margin-top: 25px;
+	}
+	#imageLogo{
+		width: 90%;
+    	margin-top: -3%;
+    	height: 76%;
+    	margin-left: -22%;
+	}
+	#menu{
+		float:left;
+		width: 70%;
+	}
+	
+	/*PIE DE PAGINA*/
+	
+	#Footer{
+		height: 100%;
+		background-color: #444444;
+		margin-left: -3%;
+    	margin-right: -3%;
+    	padding-bottom: 6%;
+    	padding-left: 7%;
+    	margin-top: -5%;
+	}
+	#FFooter{
+		margin:auto;
+		max-width:1085px;
+		height: 210px;
+    	padding-top: 2%;
+	}
+	#Inf1{
+		height: 100%;
+    	width: 30%; 
+    	float: left;
+	}
+	#Inf2{
+		float:left;
+	}
+	#tit1{
+		font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+    	font-size: 14px;
+    	color: #9FC93A;
+    	font-weight: 800;
+	}
+	#tit2{
+		font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+    	font-size: 14px;
+    	color: #62C0B1;
+    	font-weight: 800;
+    	margin-left: 5%;
+	}
+	#marcaUC3M{
+		color: white;
+		float:left;
+		margin-left: 4%;
+	}
+	
+	.InfPie{
+		 font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+		 color: white;
+		 font-size: small;
+	}
+	/*ICONOS*/
+	#Icono1{
+		float: left;
+    	margin-top: -23%;
+    	margin-left: 13%;
+	}
+	#Icono2{
+		float: left;
+    	margin-top: -23%;
+    	margin-left: 39%;
+	}
+	#Icono3{
+		float: left;
+   		margin-top: -23%;
+    	margin-left: 61%;
+	}
+	#localizacion{
+		width: 16%;
+    	margin-left: 2%;
+    	margin-top: -2%;
+	}
+	#cultura{
+		width: 19%;
+    	margin-left: 4%;
+	}
+	#turismo{
+		width: 24%;
+		margin-left: 23%;
+	}
+	#titulo1,#titulo2,#titulo3{
+		font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+    	font-size: 22px;
+    	font-weight: 800;
+	}
+	#titulo1{
+		color: #2196F3;
+	}
+	#titulo2{
+    	color: #9C27B0;
+    	margin-left: 4%;
+	}
+	#titulo3{
+		color: #FB5621;
+	}
+	#p1,#p2,#p3{
+		font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+    	font-size: 13px;
+    	text-align: center;
+	}
+	#p1{
+		width: 26%;
+    	margin-left: -2%;
+    	margin-top: 0%;
+	}
+	#p2{
+		width: 37%;
+    	margin-left: -4%;
+	
+	}
+	#p3{
+		width: 50%;
+    	margin-left: 11%;
+	}
+	
+	/*BIENVENIDA*/
+	
+	#auxBoton{
+		margin-top: -51%;
+    	margin-bottom: 49%;
+    	margin-left: 84%;
+	}
+	#botonComenzar{
+		background-color: #9C27B0;
+	    border: none;
+	    color: white;
+	    padding: 15px 32px;
+	    text-align: center;
+	    text-decoration: none;
+	    display: inline-block;
+	    font-size: 16px;
+	    margin: 4px 2px;
+	    cursor: pointer;
+	    font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+	    font-weight: 700;
+	
+	}
+	#botonComenzar:hover { 
+  		background-color:white;
+  		color: #9C27B0;
+  		border-style: solid;
+  		border-color: #9C27B0; 
+	}
+	
+	#Bienvenida{
+		background-color: rgba(229, 229, 229, 0.5);
+	}
+	#msg1{
+		font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+	    font-size: 53px;
+	    text-align: center;
+	    color: #444444;
+	    font-weight: 900;
+	    margin-top: -56%;
+	    margin-bottom: 45%;
+	    margin-left: 36%;
+    	margin-right: 21%;
+	}
+	#msg2{
+		font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+	    font-size: 29px;
+	    text-align: center;
+	    font-weight: 900;
+	    margin-top: -45%;
+	    margin-bottom: 44%;
+	    margin-left: 39%;
+	    width: 36%;
+	    color: #444444;
+	}
+
+	
+	/*CONTENIDO*/
+	#Contenido{
+		heigth: 100%;
+		background-image:url( "../img/venecia.jpg");
+		background-size: 100% 60%;
+		background-repeat: no-repeat;
+		margin-left: -3%;
+    	margin-right: -3%;
+    	padding-top: 2%;
+	}
+	#CContenido{
+		max-width:1085px;
+		margin-left: 10%;
+	}
+	
+	#Buscador{
+		background-color: rgba(229, 229, 229, 0.84);
+		height: 100%;
+    	width: 100%; 
+    	float: left;
+        margin-left: 1%;
+        padding-bottom: 4%;
+	}
+	#msg3{
+		font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+	    font-size: 29px;
+	    color: #444444;
+	    font-weight: 900;
+	    margin-left: 5%;
+	}
+	#temas{
+		background-color: white;
+	    border-radius: 15px;
+	    border: 3px solid #2196F3;
+	    width: 22%;
+	   	float: left;
+	    margin-left: 5%;
+	    margin-right: 2%;
+	}
+	#entidades{
+		background-color: white;
+    	border-radius: 15px;
+    	border: 3px solid #9C27B0;
+    	height: 100%;
+    	width: 30%;
+    	float: left;
+    	margin-bottom: 2%;
+	}
+	.form-group{
+		background-color: white;
+    	border-radius: 15px;
+    	border: 3px solid #FE5722;
+    	height: 100%;
+    	width: 33.33%;
+    	float: left;
+    	margin-left: 2%;
+    	margin-bottom: 3%;
+	}
+	
+	#titTemas{
+		font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+    	font-size: 20px;
+    	color: #2196F3;
+    	font-weight: 800;
+    	 text-align: center;
+	}
+	#titEntidades{
+		font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+    	font-size: 20px;
+    	color: #9C27B0;
+    	font-weight: 800;
+    	 text-align: center;
+	}
+	
+	#titPOIS{
+		font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+    	font-size: 20px;
+    	color: #FB5621;
+    	font-weight: 800;
+    	text-align: center;
+    	width: 70%;
+	}
+	#minimapa{
+		width: 88%;
+	    float: left;
+	    margin-top: -40%;
+	    margin-left: 53%;
+		
+	}
+	#botonBuscar{
+		background-color: #FF5722;
+	    border: none;
+	    color: white;
+	    padding: 10px 26px;
+	    text-align: center;
+	    text-decoration: none;
+	    display: inline-block;
+	    font-size: 16px;
+	    margin: 4px 2px;
+	    cursor: pointer;
+	    font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+	    font-weight: 700;
+	    border-radius: 11px;
+	}
+	#botonBuscar:hover { 
+  		background-color:white;
+  		color: #FF5722;
+  		border-style: solid;
+  		border-color: #FF5722;
+	}
+	.input-group{
+		    margin-left: 14%;
+		    padding-bottom: 5%;
+	}
+	.allChecks{
+		margin-left: 35%;
+    	padding-bottom: 7%;
+	}
+	
+	
+	/*SELECCION CARACTERISTICAS*/
+	#Caracteristicas{
+		heigth: 100%;
+		visibility: hidden;
+	}
+	#CCaracteristicas{
+		max-width:1085px;
+		margin-left: 10%;
+		background-color: #E5E5E5;
+	}
+	#msg4{
+	    font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+    	font-size: 29px;
+    	color: #444444;
+    	font-weight: 900;
+    	margin-left: 5%;
+    	margin-top: -6%;
+	}
+	.titsCaract{
+		font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+    	font-size: 19px;
+    	color: #444444;
+    	font-weight: 800;
+    	 text-align: center;
+	}
+	
+	#botonRuta{
+		background-color: #444444;
+	    border: none;
+	    color: white;
+	    padding: 10px 26px;
+	    text-align: center;
+	    text-decoration: none;
+	    display: inline-block;
+	    font-size: 16px;
+	    margin: 4px 2px;
+	    cursor: pointer;
+	    font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+	    font-weight: 700;
+	    border-radius: 11px;
+    	margin-left: 79%;
+    	margin-top: 3%;
+	}
+	
+	#dialogOrigen{
+		margin-top: -6%;
+		visibility: hidden;
+		font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+    	font-size: 14px;
+		
+	}
+	#titPOISRuta{
+		font-size: 17px;
+	    background-color: #999999;
+	    font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+	    padding: 2%;
+	    color: black;
+	    padding-bottom: 7%;	
+	}
+	#valoracion{
+		font-size: 17px;
+    	margin-left: -5.5%;
+	}
+	#botonValorar{
+		background-color: #FCBE2C;
+	    border: none;
+	    color: #000000;
+    	padding: 10px 14px;
+	    text-align: center;
+	    text-decoration: none;
+	    display: inline-block;
+	    font-size: 12px;
+	    margin: 4px 2px;
+	    cursor: pointer;
+	    font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+	    font-weight: 700;
+	    border-radius: 11px;
+    	margin-left: 4%;
+    	margin-top: -1%;
+	}
+	
+	#Mapa{
+		float: left;
+    	margin-left: 16%;
+    	margin-top: -59%;
+    	visibility: hidden;
+	}
+	#linkPlaces{
+		margin-top:2%;
+	
+	}
+	
+	.container,hr{
+		visibility: hidden;
+	}
+      /* Main marketing message and sign up button */
+      .jumbotron {
+      	visibility: hidden;
+        padding-bottom: 50%;
+      }
+      .jumbotron h1 {
+        font-size: 100px;
+        line-height: 1;
+      }
+      .jumbotron .lead {
+        font-size: 24px;
+        line-height: 1.25;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+
+
+      /* Customize the navbar links to be fill the entire space of the .navbar */
+      .navbar .navbar-inner {
+        padding: 0;
+      }
+      .navbar .nav {
+        margin: 0;
+        display: table;
+        width: 100%;
+      }
+      .navbar .nav li {
+        display: table-cell;
+        width: 1%;
+        float: none;
+      }
+      .navbar .nav li a {
+        font-weight: bold;
+        text-align: center;
+        border-left: 1px solid rgba(255,255,255,.75);
+        border-right: 1px solid rgba(0,0,0,.1);
+      }
+      .navbar .nav li:first-child a {
+        border-left: 0;
+        border-radius: 3px 0 0 3px;
+      }
+      .navbar .nav li:last-child a {
+        border-right: 0;
+        border-radius: 0 3px 3px 0;
+      }
+      
+      .valores,#noResults{
+      	visibility: hidden;
+      }

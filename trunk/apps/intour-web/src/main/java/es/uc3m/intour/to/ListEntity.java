@@ -13,23 +13,23 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "suggestions", propOrder = {
     "suggestion"
 })
-public class ListPerson {
+public class ListEntity {
 	
 	
-	private List<Person> suggestion = new LinkedList<Person>();
+	private List<Entity> suggestion = new LinkedList<Entity>();
 	
-	public ListPerson(){
+	public ListEntity(){
 		super();	
 	}
-	public ListPerson(List<Person> results) {
+	public ListEntity(List<Entity> results) {
 		this.suggestion = results;
 	}
 
-	public List<Person> getSuggestion() {
+	public List<Entity> getSuggestion() {
 		return suggestion;
 	}
 
-	public void setSuggestion(List<Person> suggestion) {
+	public void setSuggestion(List<Entity> suggestion) {
 		this.suggestion = suggestion;
 	}
 	

@@ -161,6 +161,8 @@
 	         markers_pos.splice(0, markers_pos.length);
       		 markers_result.splice(0,markers_result.length);
       		 data.splice(0, data.length);
+      		estrellasMarcadas.splice(0,estrellasMarcadas.length);
+      		primeraVezFav=0;
 	      	 valorarRuta();
 	      }
 	      
@@ -288,7 +290,6 @@
 		  
 		  var caractsAuxRequest = [];
 		  var numEstrellas=estrellasMarcadas.length;
-		  //caractsRuta.splice(0, 1);
 		  var aux;
 		  for(var i=0; i<caractsRuta.length; i++){
 			  aux=i+1;

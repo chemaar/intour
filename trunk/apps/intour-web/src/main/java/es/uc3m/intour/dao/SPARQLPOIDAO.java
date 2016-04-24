@@ -128,6 +128,22 @@ public class SPARQLPOIDAO implements POIDAO {
 			poi.setLat(lat);
 			poi.setLon(lon);
 			poi.setFuente("http://wiki.dbpedia.org/");
+			
+			if(input.equals("1")){
+				poi.setIcono("/img/placePOI.png");
+			}else if(input.equals("2")){
+				poi.setIcono("/img/calendarPOI.png");
+			}else if(input.equals("3")){
+				poi.setIcono("/img/descripctionPOI.png");
+			}else if(input.equals("4")){
+				poi.setIcono("/img/nationalityPOI.png");
+			}else if(input.equals("5")){
+				poi.setIcono("/img/fieldPOI.png");
+			}else if(input.equals("6")){
+				poi.setIcono("/img/museumPOI.png");
+			}
+			
+			
 			pois.add(poi);
 		}
 		return pois;

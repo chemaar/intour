@@ -19,7 +19,8 @@ import es.uc3m.intour.dao.GooglePlacesDAIImpl;
     "lon",
     "picture",
     "fuente",
-    "address"
+    "address",
+    "icono"
 })
 public class POI {
 
@@ -33,6 +34,8 @@ public class POI {
 	private String picture = GooglePlacesDAIImpl.DEFAULT_IMG;
 	private String fuente= "";
 	private String address= "";
+	private String icono="";
+	//private String icono="/img/marker_defecto.png";
 	
 	public POI(){
 		
@@ -99,7 +102,12 @@ public class POI {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
+	public String getIcono() {
+		return icono;
+	}
+	public void setIcono(String icono) {
+		this.icono = icono;
+	}
 	
 	
 }

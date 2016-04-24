@@ -131,7 +131,11 @@
 		          if (item.lat != undefined && item.lon != undefined) {
 		          
 		          console.log('item.lat '+i+': '+item.lat+'item.lon '+i+':'+item.lon);
-		            var icon = server+'/img/poi.png';//FIXME per type
+		            //var icon = server+'/img/poi.png';//FIXME per type
+		            var icon= server+item.icono;
+		            if(item.icono==""){
+		            	icon="";
+		            }
 		            var imgUri=item.picture;
 		            var imgURL ="<p style='text-align:center'><img src='"+imgUri+"'/></p>";
 		            var infoContent = "<ul><li>Caracteristica: "+item.name+"</li><li>Latitud: "+
@@ -148,6 +152,7 @@
 		              lat : item.lat,
 		              lng : item.lon,
 		              title : item.name,
+		              icon: icon,
 		              infoWindow: {
 		        		content : infoContent
 				      }
@@ -171,7 +176,7 @@
 						});
 					}
 		            
-		            $("ol").append("<li> Caracteristica:"+items[i].name +", Latitud: "+items[i].lat+" , Longitud: "+items[i].lon+"</li>");
+		            $("ol").append("<li>Latitud: "+items[i].lat+" , Longitud: "+items[i].lon+"</li>");
 		            
 		            
 		          }
@@ -450,13 +455,13 @@
 				   	markers_origen.push({
 		              lat : item.lat,
 		              lng : item.lon,
-		              all : item
+		              
 		            });
 	 
 	          }
 	        }
 	      }
-	      	map.addMarkers(markers_origen);   	
+	      	//map.addMarkers(markers_origen);   	
 	  }
  } 
   

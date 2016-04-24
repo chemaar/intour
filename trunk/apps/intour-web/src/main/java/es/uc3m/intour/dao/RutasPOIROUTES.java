@@ -24,6 +24,7 @@ public class RutasPOIROUTES implements POIROUTE {
 	    inicio.setLat(String.valueOf(latOrigen));
 	    inicio.setLon(String.valueOf(lngOrigen));
 	    inicio.setPicture("http://www.saracosta.com/callejon/wp-content/uploads/2011/06/aqui.jpg");
+	    inicio.setIcono("/img/origen.png");
 	    ruta.add(inicio);
 	    int posicion=0;
 	    int numPoints=poisReq.size()+1;
@@ -90,6 +91,7 @@ public class RutasPOIROUTES implements POIROUTE {
 	    		puntoCercano.setPicture(poisReq.get(i).getPicture());
 	    		puntoCercano.setFuente(poisReq.get(i).getFuente());
 	    		puntoCercano.setAddress(poisReq.get(i).getAddress());
+	    		puntoCercano.setIcono(poisReq.get(i).getIcono());
 	    	}	   	
 		}
 		

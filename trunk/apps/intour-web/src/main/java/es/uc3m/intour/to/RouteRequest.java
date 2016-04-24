@@ -12,14 +12,17 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "routerequest")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "routerequest", propOrder = {
-    "param1",
-    "param2",
-    "others"
+    "latOrigen",
+    "lngOrigen",
+    "others",
+    "markers"
 })
 public class RouteRequest {
-    @XmlElement public String latOrigen = "";
-    @XmlElement public String lngOrigen = "";
-    @XmlElement public List<String> markers = new LinkedList<String>();
+    
+	public String latOrigen = "";
+    public String lngOrigen = "";
+    private List<POI> markers = new LinkedList<POI>();
+    
     public RouteRequest(){
     	
     }
@@ -35,10 +38,10 @@ public class RouteRequest {
 	public void setLngOrigen(String lngOrigen) {
 		this.lngOrigen = lngOrigen;
 	}
-	public List<String> getMarkers() {
+	public List<POI> getMarkers() {
 		return markers;
 	}
-	public void setMarkers(List<String> markers) {
+	public void setMarkers(List<POI> markers) {
 		this.markers = markers;
 	}
 	

@@ -17,15 +17,16 @@ public class RutasPOIROUTES implements POIROUTE {
 		
 		double latOrigen=contextoRutas.getLatOrigen();
 		double lngOrigen=contextoRutas.getLngOrigen();
-		List<Double> latitudes = contextoRutas.getLatitudes();
+		List<POI> poisReq= contextoRutas.getPois();
 		List<POI> ruta = new LinkedList<POI>();
 	    POI inicio = new POI();
+	    inicio.setName("Punto de Origen");
 	    inicio.setLat(String.valueOf(latOrigen));
 	    inicio.setLon(String.valueOf(lngOrigen));
+	    inicio.setPicture("http://www.saracosta.com/callejon/wp-content/uploads/2011/06/aqui.jpg");
 	    ruta.add(inicio);
 	    int posicion=0;
-	    /*Suponemos que la longitud de las latitudes es equivalente a las longitudes*/
-	    int numPoints=latitudes.size()+1;
+	    int numPoints=poisReq.size()+1;
 	    
 	    while(ruta.size()!=numPoints){
 	    	POI auxPoi = new POI();
@@ -68,8 +69,7 @@ public class RutasPOIROUTES implements POIROUTE {
 	
 	private POI calcularPuntoCercano(List<POI> ruta,int posicion,ContextRoute contextoRutas){
 		
-		List<Double> latitudes = contextoRutas.getLatitudes();
-		List<Double> longitudes = contextoRutas.getLongitudes();
+		List<POI> poisReq= contextoRutas.getPois();
 		double auxLat=Double.parseDouble(ruta.get(posicion).getLat());
 		double auxLng=Double.parseDouble(ruta.get(posicion).getLon());
 		POI puntoCercano = new POI();
@@ -77,15 +77,19 @@ public class RutasPOIROUTES implements POIROUTE {
 	    double distancia;
 	    
 		
-		for(int i=0; i<latitudes.size();i++){
+		for(int i=0; i<poisReq.size();i++){
 			
-			distancia=calcularDistancia(auxLat,auxLng,latitudes.get(i),longitudes.get(i));
+			distancia=calcularDistancia(auxLat,auxLng,Double.parseDouble(poisReq.get(i).getLat()),Double.parseDouble(poisReq.get(i).getLon()));
 			System.out.println("DISTANCIA "+i+1+": "+distancia);
-			boolean existe=comprobarSiExiste(ruta,String.valueOf(latitudes.get(i)),String.valueOf(longitudes.get(i)));
+			boolean existe=comprobarSiExiste(ruta,poisReq.get(i).getLat(),poisReq.get(i).getLon());
 			if(distancia<=distanciaMin && distancia!=0 && existe==false){
 	    		distanciaMin=distancia;
-	    		puntoCercano.setLat(String.valueOf(latitudes.get(i)));
-	    		puntoCercano.setLon(String.valueOf(longitudes.get(i)));
+	    		puntoCercano.setLat(poisReq.get(i).getLat());
+	    		puntoCercano.setLon(poisReq.get(i).getLon());
+	    		puntoCercano.setName(poisReq.get(i).getName());
+	    		puntoCercano.setPicture(poisReq.get(i).getPicture());
+	    		puntoCercano.setFuente(poisReq.get(i).getFuente());
+	    		puntoCercano.setAddress(poisReq.get(i).getAddress());
 	    	}	   	
 		}
 		

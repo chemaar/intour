@@ -3,6 +3,8 @@ package es.uc3m.intour.appserv;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import es.uc3m.intour.dao.FoursquareDAIImpl;
 import es.uc3m.intour.dao.GooglePlacesDAIImpl;
 import es.uc3m.intour.dao.POIAROUND;
@@ -17,7 +19,7 @@ import es.uc3m.intour.to.Entity;
 import es.uc3m.intour.to.POI;
 
 public class SearchAppServ {
-
+	protected Logger logger = Logger.getLogger(SearchAppServ.class);
 	
 	List<POIDAO> poiDAOs;
 	List<POIROUTE> poiRoutes;
@@ -54,14 +56,15 @@ public class SearchAppServ {
 				pois.addAll(dao.search(context));
 			}
 		}
-		/*else if(!pois.isEmpty() && !context.getInput().equals('7')){
-			
-			for(POIAROUND dao: this.poisAround){
-				for(int i=0; i<pois.size();i++){
-					pois.addAll(dao.searchPOISAround(pois.get(i)));
-				}
-			}
-		}*/
+//		else if(!pois.isEmpty() && !context.getInput().equals('7')){
+//			logger.debug("Num of pois: "+pois.size());
+//			for(POIAROUND dao: this.poisAround){
+//				for(int i=0; i<pois.size() && pois.size()<100;i++){
+//					pois.addAll(dao.searchPOISAround(pois.get(i)));
+//				}
+//			}
+//			logger.debug("Final num of pois: "+pois.size());
+//		}
 		
 		
 		//Generar ruta...

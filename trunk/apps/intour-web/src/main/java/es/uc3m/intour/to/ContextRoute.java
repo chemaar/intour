@@ -6,8 +6,8 @@ public class ContextRoute {
 
 	private double latOrigen;
 	private double lngOrigen;
-	private List<Double> latitudes;
-	private List<Double> longitudes;
+	private List<POI> pois;
+	
 	
 	public ContextRoute(){
 		
@@ -25,19 +25,15 @@ public class ContextRoute {
 	public void setLngOrigen(double lngOrigen) {
 		this.lngOrigen = lngOrigen;
 	}
-	public List<Double> getLatitudes() {
-		return latitudes;
+
+	public List<POI> getPois() {
+		return pois;
 	}
-	public void setLatitudes(List<Double> latitudes) {
-		this.latitudes = latitudes;
+
+	public void setPois(List<POI> pois) {
+		this.pois = pois;
 	}
-	public List<Double> getLongitudes() {
-		return longitudes;
-	}
-	public void setLongitudes(List<Double> longitudes) {
-		this.longitudes = longitudes;
-	}
-	
+
 	
 	
 }

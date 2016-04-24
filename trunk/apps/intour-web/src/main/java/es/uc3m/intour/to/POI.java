@@ -5,6 +5,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import es.uc3m.intour.dao.GooglePlacesDAIImpl;
+
 @XmlRootElement(name = "poi")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "poi", propOrder = {
@@ -14,7 +16,10 @@ import javax.xml.bind.annotation.XmlType;
     "description",
     "type",
     "lat",
-    "lon"
+    "lon",
+    "picture",
+    "fuente",
+    "address"
 })
 public class POI {
 
@@ -25,6 +30,9 @@ public class POI {
 	private String type = "";
 	private String lat = "";
 	private String lon = "";
+	private String picture = GooglePlacesDAIImpl.DEFAULT_IMG;
+	private String fuente= "";
+	private String address= "";
 	
 	public POI(){
 		
@@ -71,13 +79,27 @@ public class POI {
 	public void setType(String type) {
 		this.type = type;
 	}
-	@Override
-	public String toString() {
-		return "POI [id=" + id + ", uri=" + uri + ", name=" + name
-				+ ", description=" + description + ", type=" + type + ", lat="
-				+ lat + ", lon=" + lon + "]";
+	public String getPicture() {
+		return picture;
 	}
-
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+	
+	public String getFuente() {
+		return fuente;
+	}
+	public void setFuente(String fuente) {
+		this.fuente = fuente;
+	}
+	
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
 	
 	
 }

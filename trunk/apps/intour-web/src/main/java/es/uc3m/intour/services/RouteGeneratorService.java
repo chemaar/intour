@@ -1,7 +1,6 @@
 package es.uc3m.intour.services;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,8 +22,6 @@ import es.uc3m.intour.to.RouteRequest;
 public class RouteGeneratorService {
 	
 	SearchBusiness searcher = new SearchBusinessImpl();
-	List<Double> latitudes = new LinkedList<Double>();
-	List<Double> longitudes = new LinkedList<Double>();
 	
 	public RouteGeneratorService() throws IOException{
 		
@@ -40,13 +37,10 @@ public class RouteGeneratorService {
 		System.out.println("Longitud Origen: "+input.getLngOrigen());
 	    System.out.println(input.getMarkers());
 	    
-	    procesarDatos(input.getMarkers());
-	    
 	    ContextRoute contextoRutas = new ContextRoute();
 	    contextoRutas.setLatOrigen(Double.parseDouble(input.getLatOrigen()));
 	    contextoRutas.setLngOrigen(Double.parseDouble(input.getLngOrigen()));
-	    contextoRutas.setLatitudes(latitudes);
-	    contextoRutas.setLongitudes(longitudes);
+	    contextoRutas.setPois(input.getMarkers());
 	    
 	    List<POI> camino = this.searcher.generateRoute(contextoRutas);
 	    
@@ -58,26 +52,6 @@ public class RouteGeneratorService {
 	    route.setName("Generated "+System.currentTimeMillis());
 	    route.setCamino(camino);
 		return route;
-	}
-	
-	public void procesarDatos(List<String> markers){
-		
-		double auxLat;
-		double auxLng;
-		
-		for(int i=0;i<markers.size();i++){
-			
-			if(!markers.get(i).equals("{") && !markers.get(i).equals("}")){
-				if(markers.get(i).equals("lat")){
-					auxLat=Double.parseDouble(markers.get(i+1));
-					latitudes.add(auxLat);
-				}else if(markers.get(i).equals("lng")){
-					auxLng=Double.parseDouble(markers.get(i+1));
-					longitudes.add(auxLng);
-				}
-			}
-		}	
-		
 	}
 
 	

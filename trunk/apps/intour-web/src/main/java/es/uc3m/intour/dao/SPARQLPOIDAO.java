@@ -127,6 +127,7 @@ public class SPARQLPOIDAO implements POIDAO {
 			//poi.setDescription(comment);
 			poi.setLat(lat);
 			poi.setLon(lon);
+			poi.setFuente("http://wiki.dbpedia.org/");
 			pois.add(poi);
 		}
 		return pois;

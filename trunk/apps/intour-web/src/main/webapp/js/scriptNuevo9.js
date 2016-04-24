@@ -35,6 +35,7 @@
 		    if(item.lat !="" && item.lon !=""){
 		    	
 	            markers_pos.push({
+	              all: item,
 	              lat : item.lat,
 	              lng : item.lon});
 			    }
@@ -83,11 +84,18 @@
 	   var aux=0;
 	   map.removeMarkers(markers_result);
 	   console.log('latOrigen: '+latOrigen+', lngOrigen: '+lngOrigen);
+	   
 	   for(var i=0; i< markers_pos.length;i++){
 	   		eliminarRepetidos(i);
 	   }
-	   //Fin
-	   var markers_request = JSON.stringify(data);
+	   
+	 //Marker.all:item -> POI entero
+	   var pois = [];
+	   for(var i=0; i<markers_pos.length;i++){
+		   pois.push(data[i].all);
+	   }
+	   var markers_request = JSON.stringify(pois);
+	   
 	   var serializedData='{"latOrigen":'+latOrigen+',"lngOrigen":'+lngOrigen+',"markers":'+markers_request+'}';
 	   var request = $.ajax({
 	        url: server+'/services/route',
@@ -124,7 +132,18 @@
 		          
 		          console.log('item.lat '+i+': '+item.lat+'item.lon '+i+':'+item.lon);
 		            var icon = server+'/img/poi.png';//FIXME per type
-		            var infoContent = "<ul><li>Name:"+item.name+"</li><li>Lat:"+item.lat+"</li><li>Long:"+item.lon+"</li></ul>";
+		            var imgUri=item.picture;
+		            var imgURL ="<p style='text-align:center'><img src='"+imgUri+"'/></p>";
+		            var infoContent = "<ul><li>Caracteristica: "+item.name+"</li><li>Latitud: "+
+		            item.lat+"</li><li>Longitud: "+item.lon+"</li>";
+		            if(item.address!=""){
+		            	infoContent= infoContent + "<li>Direccion: "+item.address+"</li>";
+		            }
+		            if(item.fuente !=""){
+		            	infoContent= infoContent + "<li>Fuente: "+item.fuente+"</li>";
+		            }
+		            infoContent= infoContent+"</ul>"+ imgURL;
+		            
 				     map.addMarker({
 		              lat : item.lat,
 		              lng : item.lon,
@@ -152,7 +171,7 @@
 						});
 					}
 		            
-		            $("ol").append("<li>Latitud: "+items[i].lat+" , Longitud: "+items[i].lon+"</li>");
+		            $("ol").append("<li> Caracteristica:"+items[i].name +", Latitud: "+items[i].lat+" , Longitud: "+items[i].lon+"</li>");
 		            
 		            
 		          }
@@ -328,11 +347,13 @@
 		        data: serializedData,
 		        success: function(data, textStatus, jqXHR)
 		        {
+		        	alert("INFORMACION: La ruta ha sido valorada correctamente");
 		            console.log("success",data);
 		        },
 		        error: function (jqXHR, textStatus, errorThrown)
-		        {
-		        	  console.log("error"+jqXHR);
+		        { 
+		        	 alert("ERROR: No ha sido posible valorar la ruta");
+		        	 console.log("error"+jqXHR);
 		        }
 		    });
 		  
@@ -411,38 +432,32 @@
   
   function loadResultsOrigen(data){
       
-      map.removeMarkers(markers_origen);
-      var items =[];
-   
-      if (data.suggestion.length > 0) {
-        items = data.suggestion;
-        for (var i = 0; i < items.length; i++) {
-          var item = items[i];
-          if (item.lat != undefined && item.lon != undefined) {
-            var icon = server+'/img/poi.png';//FIXME per type
-            var infoContent = "<ul><li>Name:"+item.name+"</li><li>Lat:"+item.lat+"</li><li>Long:"+item.lon+"</li></ul>";
-		    
-		    if(item.lat !="" && item.lon !=""){
-		    	latOrigen=item.lat;
-		    	lngOrigen=item.lon;
-		    	console.log('latOrigenMetodo: '+latOrigen+', lngOrigenMetodo: '+lngOrigen);
-		    	markers_origen.pop();
-			   	markers_origen.push({
-	              lat : item.lat,
-	              lng : item.lon,
-	              title : item.name,
-	              description:item.description,
-	              uri: item.uri,
-	              infoWindow: {
-	        		content : infoContent
-			      }
-	            });
- 
-          }
-        }
-      }
-      	map.addMarkers(markers_origen);   	
-  }
+	  
+	      map.removeMarkers(markers_origen);
+	      var items =[];
+	   
+	      if (data.suggestion.length > 0) {
+	        items = data.suggestion;
+	        for (var i = 0; i < items.length; i++) {
+	          var item = items[i];
+	          if (item.lat != undefined && item.lon != undefined) {
+			    
+			    if(item.lat !="" && item.lon !=""){
+			    	latOrigen=item.lat;
+			    	lngOrigen=item.lon;
+			    	console.log('latOrigenMetodo: '+latOrigen+', lngOrigenMetodo: '+lngOrigen);
+			    	markers_origen.pop();
+				   	markers_origen.push({
+		              lat : item.lat,
+		              lng : item.lon,
+		              all : item
+		            });
+	 
+	          }
+	        }
+	      }
+	      	map.addMarkers(markers_origen);   	
+	  }
  } 
   
   function clearInputs(){

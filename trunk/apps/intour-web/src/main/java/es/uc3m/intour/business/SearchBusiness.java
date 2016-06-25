@@ -11,6 +11,7 @@ import es.uc3m.intour.to.POI;
 public interface SearchBusiness {
 	List<POI> search(Context context);
 	List<Entity> searchEntity(Context context);
+	List<POI> searchPOISAround(List<POI> pois);
 	List<POI> generateRoute(ContextRoute contextoRutas);
 	String valueRoute(AspectsRoute aspects, String numEstrellas);
 }

@@ -84,6 +84,15 @@ public class SearchAppServ {
 		return entities;
 	}
 	
+	public List<POI> searchPOISAround(List<POI> pois){
+		List<POI> allPOIs = new LinkedList<POI>();
+		
+		for(POIAROUND dao:this.poisAround){
+			allPOIs.addAll(dao.searchPOISAround(pois));
+		}
+		return allPOIs;
+	}
+	
 	public List<POI> generateRoute(ContextRoute contextoRutas){
 		List<POI> pois = new LinkedList<POI>();
 		//Para cada proveedor de lugares...

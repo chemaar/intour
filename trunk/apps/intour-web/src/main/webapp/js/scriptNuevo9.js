@@ -18,6 +18,8 @@
    var primeraVezFav=0;
    var caractsRuta= [];
    var palabra="";
+   var veces=0;
+   var markers_principales= [];
     
     
    /*Función que almacena las localizaciones en un array según las caracteristicas seleccionadas*/
@@ -25,15 +27,20 @@
       
       var items = [];
       var numPOIS=caractSelection.length;
-   
+      var numFinal=numPOIS*5+numPOIS; 
+      veces++;
+      
       if (data.suggestion.length > 0) {
         items = data.suggestion;
+        markers_principales.push({
+        	lat: items[0].lat,
+        	lng: items[0].lon});
+        
         for (var i = 0; i < items.length; i++) {
           var item = items[i];
           if (item.lat != undefined && item.lon != undefined) {
 		    
 		    if(item.lat !="" && item.lon !=""){
-		    	
 	            markers_pos.push({
 	              all: item,
 	              lat : item.lat,
@@ -45,14 +52,20 @@
       }
       	
       	console.log('numPOIS: '+numPOIS);
+      	console.log('veces: '+veces);
       	console.log('markers_pos.length: '+markers_pos.length);
       	console.log('markers_result.length: '+ markers_result.length);
       	
-      	if(markers_pos.length!=0 && markers_pos.length==numPOIS){
+      	if(markers_pos.length!=0 && veces==numPOIS && markers_pos.length>=numPOIS && markers_pos.length<=numFinal){
+      		
+      		for(var j=0; j<markers_principales.length; j++){
+      			console.log('LatPrinci '+j+' :'+markers_principales[j].lat+',LngPrinci '+j+' :'+markers_principales[j].lng);
+      		}
       		calcularRutaREST();
       	}
 
     }
+   
  
 	/*Función que elimina aquellos POIS repetidos previamente al cálculo de la ruta*/
 	 function eliminarRepetidos(pos){
@@ -80,6 +93,7 @@
   /*Función que realiza el cálculo de la ruta según una serie de POIS*/
 	function calcularRutaREST(){
 	
+	   var contPoints=0;
 	   //Cargamos los datos para enviarles al servicio de calculo de ruta
 	   var aux=0;
 	   map.removeMarkers(markers_result);
@@ -121,9 +135,10 @@
 	        	$("#POISRuta").remove();
 	        }
 	        
-	        $("#Mapa").append("<h2 id='titPOISRuta'> Puntos en su Ruta: </h2>");
-  		    $("h2").append("<ol id='POISRuta'></ol>");
-	        
+	        $("#Mapa").append("<div id='resultsRoute'><h2 id='titPOISRuta'> Puntos en su Ruta: </h2></div>");
+	        $("#titPOISRuta").after("<button id='botonOrigen' type='button'>"+contPoints+"</button>");
+            $("#botonOrigen").after("<p>Punto de Origen. Latitud: "+items[0].lat+", Longitud: "+items[0].lon+"</p>");
+            
 		        for (var i = 0; i < items.length; i++) {
 				
 		          var item = items[i];
@@ -176,7 +191,17 @@
 						});
 					}
 		            
-		            $("ol").append("<li>Latitud: "+items[i].lat+" , Longitud: "+items[i].lon+"</li>");
+		            
+		            
+		            /*for(var j=0; j<markers_principales.length; j++){
+		            	if(items[i].lat==markers_principales[j].lat && items[i].lng==markers_principales[j].lng ){
+		            		contPoints++;
+		            		$("#favorito0").after("<button onclick='guardarValoracion()' id='botonValorar' type='button'>"++"</button>");
+		            	}
+		            }
+		            
+		            $("h2").append("<ol id='POISRuta'></ol>");
+		            $("ol").append("<li>Latitud: "+items[i].lat+" , Longitud: "+items[i].lon+"</li>");*/
 		            
 		            
 		          }
@@ -184,10 +209,11 @@
 		    
 	         markers_pos.splice(0, markers_pos.length);
       		 markers_result.splice(0,markers_result.length);
+      		 markers_principales.splice(0, markers_principales.length);
       		 data.splice(0, data.length);
-      		estrellasMarcadas.splice(0,estrellasMarcadas.length);
-      		primeraVezFav=0;
-	      	 valorarRuta();
+      		 estrellasMarcadas.splice(0,estrellasMarcadas.length);
+      		 primeraVezFav=0;
+	      	 //valorarRuta();
 	      }
 	      
 	       

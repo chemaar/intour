@@ -18,11 +18,24 @@ public class FoursquareDAIImpl implements POIAROUND {
 	public static String creden1=CredentialsLoaderProperties.getCredential("credenciales1");
 	public static String creden2=CredentialsLoaderProperties.getCredential("credenciales2");
 
-	public List<POI> searchPOISAround(POI poi) {
-
+	public List<POI> searchPOISAround(List<POI> pois) {
+		
+		List<POI> allpois = new LinkedList<POI>();
+		
+		for(int i=0; i<pois.size(); i++){
+			allpois.addAll(getPOIsAround(pois.get(i)));
+		}
+		
+		return allpois;
+		
+	}
+	
+	public List<POI> getPOIsAround(POI poi){
+		
 		List<POI> pois = new LinkedList<POI>();
 		try{
-
+			
+			pois.add(poi);
 			String ll= poi.getLat()+","+poi.getLon();
 			
 			//String ll="51.568 ,0.065532";

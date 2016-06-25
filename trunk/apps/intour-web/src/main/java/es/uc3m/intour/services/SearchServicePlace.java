@@ -40,8 +40,17 @@ public class SearchServicePlace {
 			context.setName(name);
 			context.setInput(input);
 			List<POI> results = this.searcher.search(context);
+			
+			if(Integer.parseInt(input)!=7){
+				results = this.searcher.searchPOISAround(results);
+				for(int i=0; i<results.size(); i++){
+					System.out.println("["+i+"]: "+results.get(i).getLat()+","+results.get(i).getLon());
+				}
+			}
+			
 			ListPOI pois = new ListPOI(results);
 			return pois;
+			
 		}catch(Exception e){
 			 throw new WebApplicationException(Response.Status.BAD_REQUEST);
 		}

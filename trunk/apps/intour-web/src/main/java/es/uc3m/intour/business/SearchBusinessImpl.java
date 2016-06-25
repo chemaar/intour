@@ -22,6 +22,10 @@ public class SearchBusinessImpl implements SearchBusiness{
 	public List<Entity> searchEntity(Context context){
 		return this.appServ.searchEntity(context);
 	}
+	
+	public List<POI> searchPOISAround(List<POI> pois){
+		return this.appServ.searchPOISAround(pois);
+	}
 	public List<POI> generateRoute(ContextRoute contextoRutas){
 		return this.appServ.generateRoute(contextoRutas);
 	}

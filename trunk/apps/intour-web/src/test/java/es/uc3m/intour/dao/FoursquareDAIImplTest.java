@@ -14,7 +14,7 @@ public class FoursquareDAIImplTest {
 		POI poi = new POI();
 		poi.setLat("51.568");
 		poi.setLon("0.065532");
-		System.out.println(foursquare.searchPOISAround(poi));
+		//System.out.println(foursquare.searchPOISAround(poi));
 	}
 
 }

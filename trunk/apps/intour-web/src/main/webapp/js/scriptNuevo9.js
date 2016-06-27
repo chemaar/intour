@@ -20,6 +20,8 @@
    var palabra="";
    var veces=0;
    var markers_principales= [];
+   var auxDIV="titPOISRuta";
+
     
     
    /*Función que almacena las localizaciones en un array según las caracteristicas seleccionadas*/
@@ -61,6 +63,7 @@
       		for(var j=0; j<markers_principales.length; j++){
       			console.log('LatPrinci '+j+' :'+markers_principales[j].lat+',LngPrinci '+j+' :'+markers_principales[j].lng);
       		}
+      		veces=0;
       		calcularRutaREST();
       	}
 
@@ -93,7 +96,6 @@
   /*Función que realiza el cálculo de la ruta según una serie de POIS*/
 	function calcularRutaREST(){
 	
-	   var contPoints=0;
 	   //Cargamos los datos para enviarles al servicio de calculo de ruta
 	   var aux=0;
 	   map.removeMarkers(markers_result);
@@ -134,13 +136,12 @@
 	        	$("#titPOISRuta").remove();
 	        	$("#POISRuta").remove();
 	        }
-	        
+	        $("#resultsRoute").remove();
 	        $("#Mapa").append("<div id='resultsRoute'><h2 id='titPOISRuta'> Puntos en su Ruta: </h2></div>");
-	        $("#titPOISRuta").after("<button id='botonOrigen' type='button'>"+contPoints+"</button>");
-            $("#botonOrigen").after("<p>Punto de Origen. Latitud: "+items[0].lat+", Longitud: "+items[0].lon+"</p>");
             
 		        for (var i = 0; i < items.length; i++) {
 				
+		          princi=0;	
 		          var item = items[i];
 		          
 		          if (item.lat != undefined && item.lon != undefined) {
@@ -191,18 +192,21 @@
 						});
 					}
 		            
-		            
-		            
-		            /*for(var j=0; j<markers_principales.length; j++){
-		            	if(items[i].lat==markers_principales[j].lat && items[i].lng==markers_principales[j].lng ){
-		            		contPoints++;
-		            		$("#favorito0").after("<button onclick='guardarValoracion()' id='botonValorar' type='button'>"++"</button>");
-		            	}
+		            if(i==0){
+		            	$("#titPOISRuta").after("<div class='DIVRoute' id='DIV"+i+"'><img class='men' id='man"+i+"' src='img/hombre.png'></div>");
+				        $("#man"+i).after("<button class='botonesRoute' id='BOTON"+i+"' type='button' onclick='visualizarInformacion("+i+")'>"+i+"</button>");
+		            	$("#BOTON"+i).after("<p class='poisImportant' id='punto"+i+"'>Punto de Origen</p>");
+		            	$("#punto"+i).after("<img class='ticks' id='tick"+i+"' onclick='verificar("+i+")' src='img/casilla.png'>");
+		            	$("#tick"+i).after("<p class='infopuntos' id='info"+i+"'>Lugar: "+$("#POIorigen").val()+", Latitud: "+items[i].lat+", Longitud: "+items[i].lon+"</p>");
+		            }else{
+		            	var auxx=i-1;
+	            		$("#DIV"+auxx).after("<div class='DIVRoute' id='DIV"+i+"'><img class='men' id='man"+i+"' src='img/hombre.png'></div>");
+				        $("#man"+i).after("<button class='botonesRoute' id='BOTON"+i+"' type='button' onclick='visualizarInformacion("+i+")'>"+i+"</button>");
+	            		$("#BOTON"+i).after("<p class='poisImportant' id='punto"+i+"'>"+items[i].name+"</p>");
+	            		$("#punto"+i).after("<img class='ticks' id='tick"+i+"' onclick='verificar("+i+")' src='img/casilla.png'>");
+	            		$("#tick"+i).after("<p class='infopuntos' id='info"+i+"'>Latitud: "+items[i].lat+", Longitud: "+items[i].lon+"</p>");
+		            	
 		            }
-		            
-		            $("h2").append("<ol id='POISRuta'></ol>");
-		            $("ol").append("<li>Latitud: "+items[i].lat+" , Longitud: "+items[i].lon+"</li>");*/
-		            
 		            
 		          }
 		        }
@@ -213,7 +217,7 @@
       		 data.splice(0, data.length);
       		 estrellasMarcadas.splice(0,estrellasMarcadas.length);
       		 primeraVezFav=0;
-	      	 //valorarRuta();
+	      	 valorarRuta();
 	      }
 	      
 	       
@@ -246,31 +250,70 @@
 	      });
 	 }
   
+	 function visualizarInformacion(i){
+		
+		var auxinfo="info"+i;
+		var info = document.getElementById(auxinfo);
+		var men=document.getElementsByClassName("men");
+		info.style.marginTop="-1%";
+		info.style.visibility="visible";
+		men[i].style.visibility="visible";
+		$("#BOTON"+i).remove();
+		$("#man"+i).after("<button class='botonesRoute' id='BOTON"+i+"' type='button' onclick='ocultarInformacion("+i+")'>"+i+"</button>");
+	 }
+	 
+	 function ocultarInformacion(i){
+		 
+		var auxinfo="info"+i;
+		var info = document.getElementById(auxinfo);
+		var men=document.getElementsByClassName("men");
+		info.style.marginTop="-5%";
+		info.style.visibility="hidden";
+		men[i].style.visibility="hidden";
+		$("#BOTON"+i).remove();
+		$("#man"+i).after("<button class='botonesRoute' id='BOTON"+i+"' type='button' onclick='visualizarInformacion("+i+")'>"+i+"</button>");		 
+	 }
+	 
+	 function verificar(i){
+		 var auxver="tick"+i;
+		 $("#"+auxver).remove();
+		 $("#punto"+i).after("<img class='ticks' id='tick"+i+"' onclick='noverificar("+i+")' src='img/comprobado.png'>");
+	 }
+	 
+	 function noverificar(i){
+		 var auxnover="tick"+i;
+		 $("#"+auxnover).remove();
+		 $("#punto"+i).after("<img class='ticks' id='tick"+i+"' onclick='verificar("+i+")' src='img/casilla.png'>");
+	 }
+	 
 	 function valorarRuta(){
 	  	
-	  	$("ol").append("<h3 id='valoracion'>Valora tu ruta:</h3>");
+	  	$("#resultsRoute").append("<div id='DIVvaloracion'><h3 id='valoracion'>Valora tu ruta:</h3></div>");
 	  	var favoritoId;
 	  	for(var i=0; i<5; i++){
 	  		favoritoId='favorito'+i;
-	  		$("#valoracion").after("<img id='"+favoritoId+"' src='img/favorito.png' onclick='addFavoritos("+i+")' alt='Icono de favorito' style='width: 25px; cursor: pointer; float:left;'>");
+	  		$("#valoracion").after("<img class='starts' id='"+favoritoId+"' src='img/favorito.png' onclick='addFavoritos("+i+")' alt='Icono de favorito'>");
 	  	}
-	  	$("#favorito0").after("<button onclick='guardarValoracion()' id='botonValorar' type='button'>Valorar</button>");
+	  	$("#valoracion").after("<button onclick='guardarValoracion()' id='botonValorar' type='button'>Valorar</button>");
 	  
 	  }
 	  
 	  function addFavoritos(idfav){
 	  	var cont=0;
+	  	var auxidfav=idfav+1;
 	  	var favoritoId;
 	  	var index=999999; //Por defecto tiene ese valor
 	  	for(var h=0; h<estrellasMarcadas.length; h++){
 	  		
 	  		if(idfav==estrellasMarcadas[h]){
-	  			index= estrellasMarcadas.indexOf(idfav);
+	  			index=estrellasMarcadas.indexOf(idfav);
 	  		}
 	  		console.log('estrellasMarcadas '+h+' : '+ estrellasMarcadas[h]);
 	  	}
 	  	
-	  	if(index==999999 && (estrellasMarcadas[estrellasMarcadas.length-1]==idfav+1 || primeraVezFav==0)){
+	  	console.log('primeraVezFav: '+primeraVezFav);
+	  	if(index==999999 && (estrellasMarcadas[estrellasMarcadas.length-1]==auxidfav || (primeraVezFav==0 && idfav==4))){
+	  		console.log("ENTRO VALORACION");
 	  		estrellasMarcadas.push(idfav);
 	  		primeraVezFav=1;
 	  		//Eliminamos las estrellas anteriores
@@ -283,14 +326,14 @@
 	  	  		favoritoId='favorito'+i;
 	  	  		for(var j=0; j<estrellasMarcadas.length; j++){
 	  	  			if(i==estrellasMarcadas[j]){
-	  	  				$("#valoracion").after("<img class='addStart' id='"+favoritoId+"' src='img/favoritoRelleno.png' onclick='removeFavoritos("+i+")' alt='Icono de favorito' style='width: 25px; cursor: pointer; float:left;'>");
+	  	  				$("#valoracion").after("<img class='starts' id='"+favoritoId+"' src='img/favoritoRelleno.png' onclick='removeFavoritos("+i+")' alt='Icono de favorito'>");
 	  	  				break;
 	  	  			}else{
 	  		  			cont++;	
 	  		  		}
 	  	  		}
 	  	  		if(cont==estrellasMarcadas.length){
-	  		  			$("#valoracion").after("<img class='addStart' id='"+favoritoId+"' src='img/favorito.png' onclick='addFavoritos("+i+")' alt='Icono de favorito' style='width: 25px; cursor: pointer; float:left;'>");
+	  		  			$("#valoracion").after("<img class='starts' id='"+favoritoId+"' src='img/favorito.png' onclick='addFavoritos("+i+")' alt='Icono de favorito'>");
 	  		  	}
 	  	  		cont=0;
 	  	  	}  	
@@ -320,14 +363,14 @@
 	  	  		favoritoId='favorito'+i;
 	  	  		for(var j=0; j<estrellasMarcadas.length; j++){
 	  	  			if(i==estrellasMarcadas[j]){
-	  	  				$("#valoracion").after("<img class='addStart' id='"+favoritoId+"' src='img/favoritoRelleno.png' onclick='removeFavoritos("+i+")' alt='Icono de favorito' style='width: 25px; cursor: pointer; float:left;'>");
+	  	  				$("#valoracion").after("<img class='starts' id='"+favoritoId+"' src='img/favoritoRelleno.png' onclick='removeFavoritos("+i+")' alt='Icono de favorito'>");
 	  	  				break;
 	  	  			}else{
 	  	  				contRem++;	
 	  		  		}
 	  	  		}
 	  	  		if(contRem==estrellasMarcadas.length){
-	  		  			$("#valoracion").after("<img class='addStart' id='"+favoritoId+"' src='img/favorito.png' onclick='addFavoritos("+i+")' alt='Icono de favorito' style='width: 25px; cursor: pointer; float:left;'>");
+	  		  			$("#valoracion").after("<img class='starts' id='"+favoritoId+"' src='img/favorito.png' onclick='addFavoritos("+i+")' alt='Icono de favorito'>");
 	  		  	}
 	  	  		contRem=0;
 	  	  	}  	

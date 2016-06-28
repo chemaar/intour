@@ -12,7 +12,7 @@
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 		<script src="./js/jquery-1.10.2.js"></script>
         <script src="./js/jquery-ui-1.10.4.custom.js"></script>
-	  	<script type="text/javascript" src="./js/scriptNuevo9.js"></script>
+	  	<script type="text/javascript" src="./js/scriptNuevo10.js"></script>
 	  	<script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=true"></script>
 	  	<script type="text/javascript" src="./js/gmaps.js"></script>
 	  	<script type="text/javascript" src="./js/prettify.js"></script>
@@ -63,42 +63,35 @@
 					<p id="msg3">Comenzamos la b&uacute;squeda...</p>
 				    <form role="form-horizontal" role="form" id="validationForm">
 						  
-							<div id="temas">
-							  	<h3 id="titTemas">1.Temas</h3>
-							  	<div class="allChecks">
-								  	<label><input type="checkbox">Arte</label><br>
-									<label><input type="checkbox">Historia</label><br>
-									<label><input type="checkbox" >Ciencias</label><br>
-									<label><input type="checkbox" >Deportes</label><br>
-									<label><input type="checkbox" >M&uacute;sica</label><br>
-									<label><input type="checkbox" >Econom&iacute;a</label><br>
-									<label><input type="checkbox" >Gastronom&iacute;a</label><br>
-									<label><input type="checkbox" >Ocio</label><br>
-							 	</div>
-							 </div>
-							  <div id="entidades">
-							  	<h3 id="titEntidades">2.Entidades</h3>
-							  	<div class="allChecks">
-								  	<label><input type="checkbox">Persona</label><br>
-									<label><input type="checkbox">Lugar</label><br>
-									<label><input type="checkbox">Organizaci&oacute;n</label><br>
-									<label><input type="checkbox">Evento</label><br>
-								</div>
-							  </div>
-							  <div class="form-group">
+						   <div class="form-group">
 							   <div class="input-group">
 							   
 							   	  <div id="titBusc">
-							 	  	<h3 id="titPOIS">3.Busca tus POIs</h3>
-							 	  	<img id="minimapa" src="./img/minimapa.png" alt="minimapa">
+							 	  	<h3 id="titPOIS">Busca tus POIs</h3>
+							 	  	<!--<img id="minimapa" src="./img/minimapa.png" alt="minimapa">-->
 							 	  </div>  
-								  <input type="text" class="form-control" placeholder="Search for..." id="name">
+								  <input type="text" placeholder="Search for..." id="name">
 						    		<button onclick="searchEntity();" id="botonBuscar" type="button">Buscar</button>
+						  		    <div id="pasoentidad" class="pasos">
+						  		    	<p class="pasosinfo">1. Busca por Entidad: Persona, Lugar, Organizaci&oacute;n, Evento u Otros.</p>
+						  		    	<img class="imgsBuscador" id="cabeza" src="./img/cabeza.png" alt="cabeza">	
+						  		    
+						  		    </div>
+						  		    <div id="pasoselect" class="pasos">
+						  		    	<p class="pasosinfo">2. Selecciona dos o m&aacute;s caracter&iacute;sticas de los resultados obtenidos.</p>
+						  		    	<img class="imgsBuscador" id="seleccionar" src="./img/seleccionar.png" alt="seleccionar">
+						  		    </div>
+						  		    <div id="pasorut" class="pasos">
+						  		    	<p class="pasosinfo">3. Genera tu propia ruta.</p>
+						  		    	<img class="imgsBuscador" id="ruta" src="./img/ruta.png" alt="ruta">
+						  		    </div>
 						  		  
 						  		</div><!-- /input-group -->
 								 
 								 
 							</div>
+						  
+							 
 						</form>
 						
 				</div>
@@ -182,13 +175,12 @@
 					  <div id="seleccionados">
 					  	<p  id="titSeleccionados" class="titsCaract">Aspectos seleccionados</p>
 					  </div>
-					  <div id='Mapa'><p style='text-align:center'><div id='map' style='width: 750px;height: 500px;'></div></p></div>
-				  	
-					  <div id="dialogOrigen">
+					  <div id='Mapa'><p style='text-align:center'><div id='map' style='width: 750px;height: 500px;'></div></p></div>  	
+				  	  <div id="dialogOrigen">
 					  		<p>Por favor, introduzca su punto de origen en la ruta (Ej: Madrid)</p>
 					  		<br>
 					  		<label><nobr>Lugar de Origen: </nobr></label><input type="text" id="POIorigen" required><br>	
-					  </div>	  	
+					  </div>	
 				  <button onclick="generarRuta();" id="botonRuta" type="button">Generar Ruta</button>
 			</div>
 		</div>

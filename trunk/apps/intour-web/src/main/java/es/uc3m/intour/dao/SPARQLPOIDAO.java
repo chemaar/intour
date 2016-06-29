@@ -129,6 +129,7 @@ public class SPARQLPOIDAO implements POIDAO {
 			poi.setLon(lon);
 			poi.setFuente("http://wiki.dbpedia.org/");
 			
+			
 			if(input.equals("1")){
 				poi.setIcono("/img/placePOI.png");
 			}else if(input.equals("2")){
@@ -143,6 +144,8 @@ public class SPARQLPOIDAO implements POIDAO {
 				poi.setIcono("/img/museumPOI.png");
 			}
 			
+			GooglePlacesDAIImpl googleplaces = new GooglePlacesDAIImpl();
+			poi.setPicture(googleplaces.obtainPhoto(poi.getName()));
 			
 			pois.add(poi);
 		}

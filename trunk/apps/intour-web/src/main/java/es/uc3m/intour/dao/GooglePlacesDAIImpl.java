@@ -14,7 +14,7 @@ import es.uc3m.intour.to.Context;
 import es.uc3m.intour.to.Entity;
 import es.uc3m.intour.to.POI;
 
-public class GooglePlacesDAIImpl implements POIDAO{
+public class GooglePlacesDAIImpl implements POIDAO,POIAROUND{
 
 	//public static final String DEFAULT_IMG = "https://pixabay.com/static/uploads/photo/2014/05/22/16/24/beach-351232_960_720.jpg";
 	public static final String DEFAULT_IMG = "http://t2.uccdn.com/images/4/6/2/img_los_mejores_lugares_para_visitar_en_asturias_21264_300_square.jpg";
@@ -46,7 +46,7 @@ public class GooglePlacesDAIImpl implements POIDAO{
 		String imgUri=DEFAULT_IMG;
 		if(photos.size()>0){
 			imgUri="https://maps.googleapis.com/maps/api/place/photo?photoreference="+
-		photos.get(0).getReference()+"&sensor=false&maxheight=250&maxwidth=250&key="+
+		photos.get(0).getReference()+"&sensor=false&maxheight=260&maxwidth=300&key="+
 		CredentialsLoaderProperties.getCredential("google.api.key");
 		}
 		return imgUri;
@@ -74,4 +74,56 @@ public class GooglePlacesDAIImpl implements POIDAO{
 		return entities;
 	}
 
+	public String obtainPhoto(String name){
+		
+		String photo="";
+		try {
+
+			List<Place> places = Places.textSearch(Params.create().query(name)).getResult();
+			photo=selectPicture(places.get(0).getPhotos());
+			
+		} catch (IOException e) {
+			
+		}
+		return photo;
+		
+	}
+
+	public List<POI> searchPOISAround(List<POI> pois) {
+		List<POI> allpois = new LinkedList<POI>();
+		
+		for(int i=0; i<pois.size(); i++){
+			allpois.addAll(getPOIsAround(pois.get(i)));
+		}
+		
+		return allpois;
+	}
+	
+	private List<POI> getPOIsAround(POI poi){
+		
+		
+		List<POI> pois = new LinkedList<POI>();
+		
+		try{
+			pois.add(poi);
+			List<Place> places=	Places.nearbySearch(Params.create()
+					.latitude(Double.parseDouble(poi.getLat())).longitude(Double.parseDouble(poi.getLon())).radius(10000)
+			        .openNow(true).maxResults(5)).getResult();
+			
+			POI newPoi = new POI();
+			newPoi.setLat(String.valueOf(places.get(0).getLatitude()));
+			newPoi.setLon(String.valueOf(places.get(0).getLongitude()));
+			newPoi.setName(places.get(0).getName());
+			newPoi.setPicture(selectPicture(places.get(0).getPhotos()));
+			newPoi.setFuente("https://developers.google.com/places/web-service/");
+			newPoi.setAddress(places.get(0).getFormattedAddress());
+			pois.add(newPoi);
+			
+			
+		}catch(Exception e){
+			logger.error(e);
+		}
+		return pois;
+		
+	}
 }

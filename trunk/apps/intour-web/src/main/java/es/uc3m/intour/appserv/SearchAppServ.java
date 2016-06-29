@@ -56,17 +56,6 @@ public class SearchAppServ {
 				pois.addAll(dao.search(context));
 			}
 		}
-//		else if(!pois.isEmpty() && !context.getInput().equals('7')){
-//			logger.debug("Num of pois: "+pois.size());
-//			for(POIAROUND dao: this.poisAround){
-//				for(int i=0; i<pois.size() && pois.size()<100;i++){
-//					pois.addAll(dao.searchPOISAround(pois.get(i)));
-//				}
-//			}
-//			logger.debug("Final num of pois: "+pois.size());
-//		}
-		
-		
 		//Generar ruta...
 		return pois;
 	}
@@ -86,10 +75,16 @@ public class SearchAppServ {
 	
 	public List<POI> searchPOISAround(List<POI> pois){
 		List<POI> allPOIs = new LinkedList<POI>();
-		
+		this.poisAround.add(new GooglePlacesDAIImpl());
 		for(POIAROUND dao:this.poisAround){
 			allPOIs.addAll(dao.searchPOISAround(pois));
 		}
+		if(allPOIs.size()==pois.size()){
+			
+			for(POIAROUND dao:this.poisAround){
+				allPOIs.addAll(dao.searchPOISAround(pois));
+			}
+		}	
 		return allPOIs;
 	}
 	

@@ -30,7 +30,7 @@ public class FoursquareDAIImpl implements POIAROUND {
 		
 	}
 	
-	public List<POI> getPOIsAround(POI poi){
+	private List<POI> getPOIsAround(POI poi){
 		
 		List<POI> pois = new LinkedList<POI>();
 		try{
@@ -41,7 +41,6 @@ public class FoursquareDAIImpl implements POIAROUND {
 			//String ll="51.568 ,0.065532";
 			// First we need a initialize FoursquareApi. 
 			FoursquareApi foursquareApi = new FoursquareApi(creden1, creden2, "http://github.com/chemaar/intour");
-
 			foursquareApi.setVersion("20131016");
 
 
@@ -56,6 +55,14 @@ public class FoursquareDAIImpl implements POIAROUND {
 					newPoi.setName(venue.getName());
 					newPoi.setLat(String.valueOf(venue.getLocation().getLat()));
 					newPoi.setLon(String.valueOf(venue.getLocation().getLng()));
+					newPoi.setFuente("https://es.foursquare.com/");
+					if(venue.getLocation().getAddress()==null){
+						newPoi.setAddress("");
+					}else{
+						newPoi.setAddress(venue.getLocation().getAddress());
+					}
+					GooglePlacesDAIImpl googleplaces = new GooglePlacesDAIImpl();
+					newPoi.setPicture(googleplaces.obtainPhoto(newPoi.getName()));
 					pois.add(newPoi);
 				}
 			} else {

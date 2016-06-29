@@ -619,7 +619,7 @@
       		/*CREAMOS EL DIV DE LA CARACTERISTICA*/
       		contenedor = document.createElement('div');
   			contenedor.id = 'div'+i;
-  			contenedor.className='divsCaract';
+  			contenedor.className='divsCaractObt';
   			obtenidos.appendChild(contenedor);
   			var conten = document.getElementById(contenedor.id);
   			divsCaracts = document.getElementsByClassName(contenedor.className);
@@ -729,7 +729,7 @@
 	  	/*CREAMOS EL DIV DE LA CARACTERISTICA*/
 	      		contenedor = document.createElement('div');
 	  			contenedor.id = 'div'+i;
-	  			contenedor.className='divsCaract';
+	  			contenedor.className='divsCaractObt';
 	  			obtenidos.appendChild(contenedor);
 	  			var conten = document.getElementById(contenedor.id);
 	  			divsCaracts = document.getElementsByClassName(contenedor.className);
@@ -889,6 +889,7 @@
 	       	contenido.style.backgroundImage="url('img/artee.jpg')";
 	       	contenido.style.backgroundSize="100% 58%";
 	       	$(".pasos").remove();
+	       	$(".divsCaractObt").remove();
 	       	var xhr = $.getJSON(server+'/services/entity?name='+name);
 	       	xhr.done(loadResultsEntity);
        }

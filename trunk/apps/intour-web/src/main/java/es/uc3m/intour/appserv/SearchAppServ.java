@@ -28,21 +28,19 @@ public class SearchAppServ {
 	public SearchAppServ(){
 		
 		this.poiDAOs = new LinkedList<POIDAO>();
+		this.poisAround = new LinkedList<POIAROUND>();
+		this.poiRoutes = new LinkedList<POIROUTE>();
 		
 		/*DBPEDIA*/
 		this.poiDAOs.add(new SPARQLPOIDAO());
 		
-		/*GooglePlaces*/
-		//this.poiDAOs.add(new GooglePlacesDAIImpl());
-		
 		/*FourSquare*/
-		this.poisAround = new LinkedList<POIAROUND>();
 		this.poisAround.add(new FoursquareDAIImpl());
 		
 		/*RUTAS*/
-		this.poiRoutes = new LinkedList<POIROUTE>();
 		this.poiRoutes.add(new RutasPOIROUTES());
 	}
+	
 	public List<POI> search(Context context){
 		List<POI> pois = new LinkedList<POI>();
 		//Para cada proveedor de lugares...
@@ -75,12 +73,11 @@ public class SearchAppServ {
 	
 	public List<POI> searchPOISAround(List<POI> pois){
 		List<POI> allPOIs = new LinkedList<POI>();
-		this.poisAround.add(new GooglePlacesDAIImpl());
 		for(POIAROUND dao:this.poisAround){
 			allPOIs.addAll(dao.searchPOISAround(pois));
 		}
 		if(allPOIs.size()==pois.size()){
-			
+		    this.poisAround.add(new GooglePlacesDAIImpl());
 			for(POIAROUND dao:this.poisAround){
 				allPOIs.addAll(dao.searchPOISAround(pois));
 			}
@@ -105,6 +102,14 @@ public class SearchAppServ {
 		for(POIROUTE dao:this.poiRoutes){
 			//Mezclar resultados
 			result=dao.valueRoute(aspects,numEstrellas);
+		}
+		return result;
+	}
+	
+	public String recommendRoute(List<POI> pois,String numEstrellas){
+		String result="";
+		for(POIROUTE dao:this.poiRoutes){
+			result=dao.recommendRoute(pois, numEstrellas);
 		}
 		return result;
 	}

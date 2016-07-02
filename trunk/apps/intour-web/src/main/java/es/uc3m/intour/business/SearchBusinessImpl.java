@@ -33,4 +33,8 @@ public class SearchBusinessImpl implements SearchBusiness{
 	public String valueRoute(AspectsRoute aspects,String numEstrellas){
 		return this.appServ.valueRoute(aspects, numEstrellas);
 	}
+	
+	public String recommendRoute(List<POI> pois,String numEstrellas){
+		return this.appServ.recommendRoute(pois, numEstrellas);
+	}
 }

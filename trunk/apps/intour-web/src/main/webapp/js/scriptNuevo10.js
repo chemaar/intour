@@ -8,8 +8,8 @@
    var aux=0;
    var latOrigen=0;
    var lngOrigen=0;
-   var contSel=5;
-   var contObt=5;
+   var contSel=0;
+   var contObt=0;
    var caractSelection= [];
    var POIorigen="Novalue";
    var primeraVez=0;
@@ -22,7 +22,9 @@
    var auxDIV="titPOISRuta";
    var ticksMarcados=[];
    var primeraVezTick=0;
-
+   var contBusqueda=0;
+   var markers_recommendation = [];
+   var numEstrellas=0;
     
     
    /*Función que almacena las localizaciones en un array según las caracteristicas seleccionadas*/
@@ -170,6 +172,7 @@
 				      }
 		            });
 		            markers_result.push({
+		            	all : item,
 		            	lat : item.lat,
 		              	lng : item.lon,	
 		            });
@@ -208,6 +211,10 @@
 		        }
 		    
 	         markers_pos.splice(0, markers_pos.length);
+	         //Copiamos los puntos de la ruta antes de que se eliminen
+	         for(var z=0; z<markers_result.length; z++){
+	        	 markers_recommendation.push(markers_result[z].all);
+	         }
       		 markers_result.splice(0,markers_result.length);
       		 data.splice(0, data.length);
       		 estrellasMarcadas.splice(0,estrellasMarcadas.length);
@@ -406,7 +413,7 @@
 	  function guardarValoracion(){
 		  
 		  var caractsAuxRequest = [];
-		  var numEstrellas=estrellasMarcadas.length;
+		  numEstrellas=estrellasMarcadas.length;
 		  var aux;
 		  for(var i=0; i<caractsRuta.length; i++){
 			  aux=i+1;
@@ -445,7 +452,6 @@
 		        data: serializedData,
 		        success: function(data, textStatus, jqXHR)
 		        {
-		        	//alert("INFORMACION: La ruta ha sido valorada correctamente");
 		        	$("#Mapa").append("<div id='dialogAlertaValorar'><p>INFORMACI&Oacute;N: La ruta ha sido valorada correctamente</p><br><div>");
 					$("#dialogAlertaValorar").dialog({
 					    modal: true,
@@ -458,10 +464,10 @@
 					    }
 			    	});
 		            console.log("success",data);
+		            recomendar();
 		        },
 		        error: function (jqXHR, textStatus, errorThrown)
 		        { 
-		        	 //alert("ERROR: No ha sido posible valorar la ruta");
 		        	$("#Mapa").append("<div id='dialogErrorValorar'><p>ERROR: No ha sido posible valorar la ruta. Int&eacute;ntelo m&aacute;s tarde.</p><br><div>");
 					$("#dialogErrorValorar").dialog({
 					    modal: true,
@@ -480,6 +486,33 @@
 	  }
 		  
   
+  function recomendar(){
+	  //numEstrellas=3;
+	//Enviamos los datos con la valoracion del usuario
+	  var markersRequest = JSON.stringify(markers_recommendation);
+	  var serializedData='{"numStarts":'+numEstrellas+',"markers":'+markersRequest+'}';
+	  console.log(serializedData);
+	   var request = $.ajax({
+	        url: server+'/services/recommend',
+	        async: true,
+	        headers: {          
+	                 Accept : "text/plain; charset=utf-8",         
+	                "Content-Type": "application/json; charset=utf-8"   
+	  		},  
+	        type: "post",
+	        data: serializedData,
+	        success: function(data, textStatus, jqXHR)
+	        {
+	            console.log("success",data);
+	        },
+	        error: function (jqXHR, textStatus, errorThrown)
+	        { 
+	        	console.log("error"+jqXHR);
+	        }
+	    });
+	  
+	  
+  }	  
   
   function search(name,input) {
   
@@ -605,6 +638,10 @@
       var auxParam;
       var imgId;
       var segundoId;
+      var numcaracts=$('#obtenidos').find('div').length;
+      console.log("numcaracts: "+numcaracts);
+      var divd;
+      var entero;
       
       for(var i=0; i<caracteristicas.length; i++){
       
@@ -612,10 +649,12 @@
       	var boton = document.createElement('input');
       	if(caracteristicas[i].valor!=undefined){
       	
-      	    contObt= contObt+4
-      	    contSel= contSel+1;
-      		obtenidos.style.paddingBottom=contObt+"%";
-      		seleccionados.style.paddingBottom=contSel+"%";
+      		//divd=numcaracts/2;
+      		//console.log("divd: "+divd);
+      	    //contObt= contObt+4
+      	    //contSel= contSel+1;
+      		obtenidos.style.paddingBottom="25%";
+      		seleccionados.style.paddingBottom="15%";
       		/*CREAMOS EL DIV DE LA CARACTERISTICA*/
       		contenedor = document.createElement('div');
   			contenedor.id = 'div'+i;
@@ -671,10 +710,10 @@
 			  		input: input
 		});
 		
-	    contObt=contObt-3; 
-	    contSel= contSel+3;
-	    obtenidos.style.paddingBottom=contObt+"%";
-	    seleccionados.style.paddingBottom=contSel+"%";
+	    //contObt=contObt-3; 
+	    //contSel= contSel+3;
+	    //obtenidos.style.paddingBottom=contObt+"%";
+	    //seleccionados.style.paddingBottom=contSel+"%";
 	    /*CREAMOS EL DIV DE LA CARACTERISTICA*/
       		contenedor = document.createElement('div');
   			contenedor.id = 'div'+i;
@@ -723,8 +762,8 @@
 		 	}
 		 }
 		  
-		  contSel= contSel-4;
-		  seleccionados.style.paddingBottom=contSel+"%";
+		  //contSel= contSel-4;
+		  //seleccionados.style.paddingBottom=contSel+"%";
 		 
 	  	/*CREAMOS EL DIV DE LA CARACTERISTICA*/
 	      		contenedor = document.createElement('div');
@@ -866,20 +905,24 @@
 	       	caracteristicas.style.marginBottom="6%";
 	       	caracteristicas.style.marginLeft="-24px";
 	       	ccaracteristicas.style.paddingBottom="4%";
-	       	obtenidos.style.backgroundColor="white";
-	       	obtenidos.style.height="50%";
-	       	obtenidos.style.marginLeft="5%";
-	       	obtenidos.style.width="85%";
-	       	obtenidos.style.padding="2%";
-	       	obtenidos.style.border="3px solid #444444";
-	       	obtenidos.style.borderRadius = "35px";
-	       	seleccionados.style.backgroundColor="white";
-	       	seleccionados.style.height="50%";
-	       	seleccionados.style.marginLeft="5%";
-	       	seleccionados.style.width="85%";
-	       	seleccionados.style.padding="2%";
-	       	seleccionados.style.border="3px solid #444444";
-	       	seleccionados.style.borderRadius = "35px";
+	       	if(contBusqueda==0){
+	       		obtenidos.style.backgroundColor="white";
+		       	obtenidos.style.height="50%";
+		       	obtenidos.style.marginLeft="5%";
+		       	obtenidos.style.width="85%";
+		       	obtenidos.style.padding="2%";
+		       	obtenidos.style.border="3px solid #444444";
+		       	obtenidos.style.borderRadius = "35px";
+		       	seleccionados.style.backgroundColor="white";
+		       	seleccionados.style.height="50%";
+		       	seleccionados.style.marginLeft="5%";
+		       	seleccionados.style.width="85%";
+		       	seleccionados.style.padding="2%";
+		       	seleccionados.style.border="3px solid #444444";
+		       	seleccionados.style.borderRadius = "35px";
+	       	}
+	       	
+	       	contBusqueda=1;
 	       	footer.style.marginTop="0%";
 	       	footer.style.paddingTop="0%";
 	       	footer.style.paddingBottom="6%";

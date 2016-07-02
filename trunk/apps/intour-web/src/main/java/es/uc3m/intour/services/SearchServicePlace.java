@@ -43,9 +43,9 @@ public class SearchServicePlace {
 			
 			if(Integer.parseInt(input)!=7){
 				results = this.searcher.searchPOISAround(results);
-				for(int i=0; i<results.size(); i++){
+				/*for(int i=0; i<results.size(); i++){
 					System.out.println("["+i+"]: "+results.get(i).getLat()+","+results.get(i).getLon());
-				}
+				}*/
 			}
 			
 			ListPOI pois = new ListPOI(results);

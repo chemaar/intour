@@ -14,4 +14,5 @@ public interface SearchBusiness {
 	List<POI> searchPOISAround(List<POI> pois);
 	List<POI> generateRoute(ContextRoute contextoRutas);
 	String valueRoute(AspectsRoute aspects, String numEstrellas);
+	String recommendRoute(List<POI> pois,String numEstrellas);
 }

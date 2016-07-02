@@ -32,8 +32,9 @@ public class RecommendationService {
 		
 		System.out.println("numStarts: "+input.getNumStarts());
 		System.out.println("Markers: "+input.getMarkers());
+		List <POI> pois = new LinkedList<POI>();
 		//Puntos de ejemplo
-		POI poi1 = new POI();
+		/*POI poi1 = new POI();
 		poi1.setLat("51.568517");
 		poi1.setLon("0.069289");
 		POI poi2 = new POI();
@@ -58,7 +59,13 @@ public class RecommendationService {
 		pois.add(poi3);
 		pois.add(poi4);
 		pois.add(poi5);
-		pois.add(poi6);
+		pois.add(poi6);*/
+		for(int i=0; i<input.getMarkers().size(); i++){
+			POI poi = new POI();
+			poi.setLat(input.getMarkers().get(i).getLat());
+			poi.setLon(input.getMarkers().get(i).getLon());
+			pois.add(poi);
+		}
 		
 		String result= this.searcher.recommendRoute(pois,input.getNumStarts());
 		return result;

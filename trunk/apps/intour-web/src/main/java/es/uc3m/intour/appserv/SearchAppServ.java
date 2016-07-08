@@ -9,6 +9,7 @@ import es.uc3m.intour.dao.FoursquareDAIImpl;
 import es.uc3m.intour.dao.GooglePlacesDAIImpl;
 import es.uc3m.intour.dao.POIAROUND;
 import es.uc3m.intour.dao.POIDAO;
+import es.uc3m.intour.dao.POIRECOMMEND;
 import es.uc3m.intour.dao.POIROUTE;
 import es.uc3m.intour.dao.RutasPOIROUTES;
 import es.uc3m.intour.dao.SPARQLPOIDAO;
@@ -24,6 +25,7 @@ public class SearchAppServ {
 	List<POIDAO> poiDAOs;
 	List<POIROUTE> poiRoutes;
 	List<POIAROUND> poisAround;
+	List<POIRECOMMEND> poisRecommended;
 	
 	public SearchAppServ(){
 		
@@ -92,7 +94,6 @@ public class SearchAppServ {
 			//Mezclar resultados
 			pois.addAll(dao.generateRoute(contextoRutas));
 		}
-		
 		//Generar ruta...
 		return pois;
 	}
@@ -106,11 +107,21 @@ public class SearchAppServ {
 		return result;
 	}
 	
-	public String recommendRoute(List<POI> pois,String numEstrellas){
+	public String saveScores(List<POI> pois,String numEstrellas){
 		String result="";
-		for(POIROUTE dao:this.poiRoutes){
-			result=dao.recommendRoute(pois, numEstrellas);
+		for(POIRECOMMEND dao:this.poisRecommended){
+			result=dao.saveScores(pois, numEstrellas);
 		}
 		return result;
+	}
+	
+	public List<POI> recommendRoute(List<POI> pois){
+		List<POI> poisRecommended = new LinkedList<POI>();
+		for(POIRECOMMEND dao:this.poisRecommended){
+			//Mezclar resultados
+			poisRecommended.addAll(dao.recommendRoute(pois));
+		}
+		
+		return poisRecommended;
 	}
 }

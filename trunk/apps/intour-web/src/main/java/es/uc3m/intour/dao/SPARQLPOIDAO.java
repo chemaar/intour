@@ -22,7 +22,7 @@ public class SPARQLPOIDAO implements POIDAO {
 
 
 	private String endpoint = "http://dbpedia.org/sparql/"; //FIXME: Endpoint in the context?
-	
+	//private String endpoint = "http://dbpedia.org/snorql/"; //FIXME: Endpoint in the context?
 	public static final String POI_QUERY="poi.query"; //See SPARQLQueriesLoader.properties
 	public static final String PERSON_QUERY="person.query";
 	public static String consulta;

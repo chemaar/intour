@@ -43,9 +43,14 @@ public class RouteGeneratorService {
 	    contextoRutas.setPois(input.getMarkers());
 	    
 	    List<POI> camino = this.searcher.generateRoute(contextoRutas);
-	    
 	    for(int i=0; i<camino.size();i++){
 	    	System.out.println("Punto "+i+": Lat->"+camino.get(i).getLat()+" Lng->"+camino.get(i).getLon());
+	    }
+	    
+	    List<POI> poisrecommended = this.searcher.recommendRoute(camino);
+	    
+	    for(int j=0;j< poisrecommended.size(); j++){
+	    	System.out.println("Recomendado "+j+": Lat->"+poisrecommended.get(j).getLat()+" Lng->"+poisrecommended.get(j).getLon());
 	    }
 	    
 	    Route route = new Route();

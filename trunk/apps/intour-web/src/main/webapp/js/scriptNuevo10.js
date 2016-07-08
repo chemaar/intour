@@ -886,7 +886,7 @@
   
   
   function searchEntity(){
-  		
+	  
 	  	var caracteristicas= document.getElementById("Caracteristicas");
 		var ccaracteristicas= document.getElementById("CCaracteristicas");
 		var obtenidos= document.getElementById("obtenidos");

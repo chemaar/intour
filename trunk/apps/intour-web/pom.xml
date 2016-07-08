@@ -43,27 +43,27 @@
 			<artifactId>jersey-core</artifactId>
 			<version>1.19</version>
 		</dependency>
-		
-			<dependency>
+
+		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-servlet</artifactId>
 			<version>1.19</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-json</artifactId>
 			<version>1.19</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-server</artifactId>
 			<version>1.19</version>
 		</dependency>
-		
-		
-		
+
+
+
 		<dependency>
 			<groupId>org.codehaus.jettison</groupId>
 			<artifactId>jettison</artifactId>
@@ -106,12 +106,42 @@
 		<!-- <dependency> <groupId>org.apache.solr</groupId> <artifactId>solr-core</artifactId> 
 			<version>1.4.1</version> </dependency> <dependency> <groupId>org.apache.lucene</groupId> 
 			<artifactId>lucene-core</artifactId> <version>2.9.0</version> </dependency> -->
+
+		<!-- Foursquare y Google Places -->
+
+		<dependency>
+			<groupId>net.sf.sprockets</groupId>
+			<artifactId>sprockets</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>fi.foyt</groupId>
+			<artifactId>foursquare-api</artifactId>
+			<version>1.0.3-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.mahout</groupId>
+			<artifactId>mahout-core</artifactId>
+			<version>0.9</version>
+		</dependency>
+
 	</dependencies>
 
 
 
 	<!--Repositorios -->
 	<repositories>
+
+		<repository>
+			<id>foursquareapijava</id>
+			<name>Foursquare V2 API for Java Repository</name>
+			<url>http://foursquare-api-java.googlecode.com/svn/repository</url>
+		</repository>
+
+
 		<repository>
 			<id>central</id>
 			<url>https://repo1.maven.org/maven2</url>
@@ -210,7 +240,9 @@
 				<configuration>
 					<appName>intour-web</appName>
 					<processTypes>
-						<web>java $JAVA_OPTS -cp trunk/apps/intour-web/target/classes:trunk/apps/intour-web/target/dependency/* intour-web</web>
+						<web>java $JAVA_OPTS -cp
+							trunk/apps/intour-web/target/classes:trunk/apps/intour-web/target/dependency/*
+							intour-web</web>
 					</processTypes>
 				</configuration>
 			</plugin>
@@ -256,6 +288,10 @@
 							<maxIdleTime>60000</maxIdleTime>
 						</connector>
 					</connectors>
+					<init-param>
+						<param-name>useFileMappedBuffer</param-name>
+						<param-value>true</param-value> <!-- change to false -->
+					</init-param>
 				</configuration>
 			</plugin>
 

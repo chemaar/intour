@@ -1,7 +1,6 @@
 package es.uc3m.intour.business;
 
 import java.util.List;
-
 import es.uc3m.intour.appserv.SearchAppServ;
 import es.uc3m.intour.to.AspectsRoute;
 import es.uc3m.intour.to.Context;
@@ -34,7 +33,11 @@ public class SearchBusinessImpl implements SearchBusiness{
 		return this.appServ.valueRoute(aspects, numEstrellas);
 	}
 	
-	public String recommendRoute(List<POI> pois,String numEstrellas){
-		return this.appServ.recommendRoute(pois, numEstrellas);
+	public String saveScores(List<POI> pois,String numEstrellas){
+		return this.appServ.saveScores(pois, numEstrellas);
+	}
+	
+	public List<POI> recommendRoute(List<POI> pois){
+		return this.appServ.recommendRoute(pois);
 	}
 }
